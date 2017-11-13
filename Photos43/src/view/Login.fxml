@@ -22,9 +22,9 @@
          </font>
       </Label>
       <Sphere layoutX="65.0" layoutY="217.0" radius="10.0" />
-      <ImageView fitHeight="157.0" fitWidth="238.0" layoutX="347.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView blendMode="SRC_ATOP" fitHeight="157.0" fitWidth="238.0" layoutX="347.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../Desktop/Fall17/Software%20Meth/login_cover.jpg" />
+            <Image url="@../../docs/login_cover.jpg" />
          </image>
       </ImageView>
       <Button fx:id="userLogin" layoutX="197.0" layoutY="303.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Login">
