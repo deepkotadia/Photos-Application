@@ -17,6 +17,18 @@ public class Photos extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
+		mainStage = primaryStage;
+		
+		FXMLLoader loader= new FXMLLoader();
+		loader.setLocation(getClass().getResource("/view/Login.fxml"));
+		AnchorPane root = (AnchorPane)loader.load();
+		
+		Scene scene = new Scene(root,700,500);
+		mainStage.setScene(scene);
+		mainStage.setTitle("Photo Album");
+		mainStage.setResizable(false);
+		mainStage.show();
+		
 	}
 
 	public static void main(String[] args) {
