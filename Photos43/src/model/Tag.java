@@ -1,7 +1,8 @@
 package model;
 
 /**
- * @author deepkotadia
+ * @author Deep Kotadia
+ * @author Chinmoyi Bhushan
  *
  */
 public class Tag {

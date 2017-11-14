@@ -4,7 +4,8 @@
 package control;
 
 /**
- * @author deepkotadia
+ * @author Deep Kotadia
+ * @author Chinmoyi Bhushan
  *
  */
 public class LoginControl {
