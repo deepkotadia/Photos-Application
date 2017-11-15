@@ -4,6 +4,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Deep Kotadia
+ * @author Chinmoyi Bhushan
+ *
+ */
 public class PhotoAlbumManager implements Serializable {
 	
 	/* Serialization stuff */
