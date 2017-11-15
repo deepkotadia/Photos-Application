@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Chinmoyi Bhushan, Deep Kotadia` -->
+<!-- Chinmoyi Bhushan, Deep Kotadia -->
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -27,7 +27,7 @@
             <Image url="@../../docs/login_cover.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="userLogin" layoutX="197.0" layoutY="303.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Login">
+      <Button fx:id="userLogin" layoutX="197.0" layoutY="303.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Login" ononMouseClicked="#handleLoginButton">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font>

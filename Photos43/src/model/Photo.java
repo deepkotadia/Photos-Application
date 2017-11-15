@@ -63,4 +63,12 @@ public class Photo {
 	public String getPhotoPath() {
 		return photoPath;
 	}
+	
+	public List<String> getNameTags(){
+		return nameTags;
+	}
+	
+	public List<String> getLocationTag(){
+		return locationTags;
+	}
 }

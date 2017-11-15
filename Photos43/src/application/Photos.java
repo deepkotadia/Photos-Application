@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import model.PhotoAlbumManager;
 
 
 public class Photos extends Application {
@@ -34,5 +35,6 @@ public class Photos extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+		//PhotoAlbumManager manager = new PhotoAlbumManager();
 	}
 }

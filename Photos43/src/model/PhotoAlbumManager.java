@@ -16,20 +16,26 @@ public class PhotoAlbumManager {
 		this.isUserLoggedIn = false;	
 	}
 	
-	public void addUser(User user) {
-		//TODO
-		
+	public void addUser(String userName, String name) {
+		User newUser = new User(userName, name, false);
+		users.add(newUser);		
 	}
 	
-	public void removeUser(User user) {
-		//TODO
-		
+	public void removeUser(String userName) {
+		User userToBeDeleted = new User(userName,"",false);
+		users.remove(userToBeDeleted);		
 	}
 	
-	public void login(String userName) {
+	public boolean login(String userName) {
 		int currentUserIndex = users.indexOf(new User(userName, "", false));
+		
+		if(currentUserIndex == -1) {
+			return false;
+		}
+		
 		this.setCurrentUser(users.get(currentUserIndex));
 		this.setUserLoggedIn(true);		
+		return true;
 	}
 	
 	public void logout() {

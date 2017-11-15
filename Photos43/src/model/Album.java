@@ -68,5 +68,9 @@ public class Album {
 	public Date getDateCreated() {
 		return dateCreated;
 	}
+	
+	public List<Photo> getPhotos() {
+		return photos;
+	}
 
 }

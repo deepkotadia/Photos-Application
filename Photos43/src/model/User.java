@@ -51,7 +51,7 @@ public class User {
 	
 	@Override 
 	public int hashCode() {
-		int result= 11;
+		int result = 11;
 		return 17 * result + this.getUsername().hashCode();
 	}
 
@@ -65,6 +65,10 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public List<Album> getAlbums(){
+		return albums;
 	}
 
 }
