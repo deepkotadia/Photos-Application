@@ -7,7 +7,7 @@ public class PhotoAlbumManager {
 	private User currentUser;
 	private boolean isUserLoggedIn;
 	private List<User> users;
-	
+		
 	public PhotoAlbumManager() {
 		users = new ArrayList<User>();
 		users.add(new User("admin", "Admin", true));
