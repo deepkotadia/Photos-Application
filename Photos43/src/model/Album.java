@@ -1,5 +1,6 @@
 package model;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author Chinmoyi Bhushan
  *
  */
-public class Album {
+public class Album implements Serializable {
 	
 	private String albumName;
 	private Date dateCreated;
