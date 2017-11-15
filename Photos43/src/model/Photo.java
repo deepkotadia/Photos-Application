@@ -1,5 +1,6 @@
 package model;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * @author Chinmoyi Bhushan
  *
  */
-public class Photo {
+public class Photo implements Serializable {
 	
 	private String photoPath;
 	private List<String> nameTags;

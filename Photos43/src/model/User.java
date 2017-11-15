@@ -1,5 +1,6 @@
 package model;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * @author Chinmoyi Bhushan
  *
  */
-public class User {
+public class User implements Serializable {
 	
 	private String username;
 	private String name;
