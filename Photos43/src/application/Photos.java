@@ -2,8 +2,10 @@ package application;
 	
 import control.LoginControl;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import model.PhotoAlbumManager;
@@ -13,6 +15,8 @@ import java.io.*;
 public class Photos extends Application {
 	
 	Stage mainStage;
+	
+	public static PhotoAlbumManager manager = new PhotoAlbumManager();
 	
 	@Override
 	public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
@@ -36,10 +40,31 @@ public class Photos extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		/*write to users.dat file once application is exited, for persistence*/
+		mainStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+			public void handle(WindowEvent we) {
+				try {
+					PhotoAlbumManager.serialize(manager);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("Stage is closing");
+			}
+		});
+	
 	}
 	
-	public static void main(String[] args) {
+	
+	public static void main(String[] args) throws ClassNotFoundException {
+
+		try {
+			manager = PhotoAlbumManager.deserialize();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		launch(args);
-		//PhotoAlbumManager manager = new PhotoAlbumManager();
 	}
 }

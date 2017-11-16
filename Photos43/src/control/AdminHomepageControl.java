@@ -6,6 +6,7 @@ package control;
 import java.io.IOException;
 import java.util.*;
 
+import application.Photos;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,8 +41,8 @@ public class AdminHomepageControl {
 		Button AddBtn, DeleteBtn, LogoutBtn;
 	
 	private static List<String> nameandusername = new ArrayList<String>();
-	private static List<User> users = new ArrayList<User>();
-	private PhotoAlbumManager ulist;
+	//private static List<User> users = new ArrayList<User>();
+	private static PhotoAlbumManager ulistmanager = Photos.manager;
 	private ObservableList<String> obsList;
 	
 	/**
@@ -120,10 +121,10 @@ public class AdminHomepageControl {
 			   //ulist.addUserToList(tempUser);
 			   //obsList.add("Name: " + tempUser.getName() + ", " + "UserName: " + tempUser.getUsername());
 			   
-			   users.add(tempUser);
+			   //users.add(tempUser);
 			   populatenameandusername();
-			   ulist.addUser(tempUser.getUsername(), tempUser.getName());
-			   PhotoAlbumManager.serialize(ulist);
+			   ulistmanager.addUser(tempUser.getUsername(), tempUser.getName());
+			   PhotoAlbumManager.serialize(ulistmanager);
 			   			   
 			   //if this is first user added, then select it
 			   if (obsList.size() == 1) {
@@ -132,7 +133,7 @@ public class AdminHomepageControl {
 			   else
 			   {
 				   int index = 0;
-				   for(User s: ulist.getusers())
+				   for(User s: ulistmanager.getusers())
 				   {
 					   
 					   if(s == tempUser)
@@ -158,7 +159,7 @@ public class AdminHomepageControl {
 		   else if (name.trim().isEmpty())
 			   return "Full Name is a required field.";
 		   
-		   if (ulist.doesUserExist(username))
+		   if (ulistmanager.doesUserExist(username))
 			   return "This username is already taken, please try another username.";
 		   else	   
 		   return null;
@@ -181,18 +182,18 @@ public class AdminHomepageControl {
 
 		   Optional<ButtonType> result = alert.showAndWait();
 		   if (result.get() == ButtonType.OK) { // ... user chose OK
-			   String userName = users.get(userindex).getUsername();
-			   users.remove(userindex);
+			   String userName = ulistmanager.getusers().get(userindex).getUsername();
+			   //users.remove(userindex);
 			   populatenameandusername();
-			   ulist.removeUser(userName);
-			   PhotoAlbumManager.serialize(ulist);
+			   ulistmanager.removeUser(userName);
+			   PhotoAlbumManager.serialize(ulistmanager);
 			   
-			   if(users.size() == 0) {
+			   if(ulistmanager.getusers().size() == 0) {
 					DeleteBtn.setVisible(false);
 		       }
 			   else {
-				   int lastuserindex = users.size();
-				   if(users.size() == 1) { //only one user remaining in list, so select it and display its details
+				   int lastuserindex = ulistmanager.getusers().size();
+				   if(ulistmanager.getusers().size() == 1) { //only one user remaining in list, so select it and display its details
 					   listView.getSelectionModel().select(0);
 				   }
 				   else if(userindex == lastuserindex) { //deleted user was last user in the list, so select previous user, previous user is now last user
@@ -221,8 +222,8 @@ public class AdminHomepageControl {
 	  */
 	public static void populatenameandusername(){
 		
-		for(int i = 0; i < users.size(); i++) {
-			nameandusername.add("Name: " + users.get(i).getName() + ", " + "UserName: " + users.get(i).getUsername());
+		for(int i = 0; i < ulistmanager.getusers().size(); i++) {
+			nameandusername.add("Name: " + ulistmanager.getusers().get(i).getName() + ", " + "UserName: " + ulistmanager.getusers().get(i).getUsername());
 		}	
 	}
 	

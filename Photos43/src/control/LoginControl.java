@@ -29,6 +29,7 @@ import javafx.util.Callback;
 import model.*;
 import control.*;
 import javafx.event.ActionEvent;
+import application.Photos;
 
 
 /**
@@ -44,7 +45,7 @@ public class LoginControl {
 	@FXML 
 		private Button userLogin;
 	
-	PhotoAlbumManager photoAlbumManager;
+	PhotoAlbumManager photoAlbumManager = Photos.manager;
 	
 	public final String adminUserName = "admin";
 	
