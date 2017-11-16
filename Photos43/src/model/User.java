@@ -71,5 +71,6 @@ public class User implements Serializable {
 	public List<Album> getAlbums(){
 		return albums;
 	}
+	
 
 }

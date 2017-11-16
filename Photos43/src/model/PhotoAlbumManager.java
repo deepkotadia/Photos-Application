@@ -99,6 +99,25 @@ public class PhotoAlbumManager implements Serializable {
 		return users;
 	}
 	
+	
+	 /**
+	   * doesUserExist
+	   * Checks if a specific username is in the users list
+	   * 
+	   * @param username - the username to check for in the from the overall list of users
+	   * @return boolean - return true if username is in the list, false if it is not    
+	   */
+	public boolean doesUserExist(String username) {
+		
+		for(User u : users) {
+			if(u.getUsername().equals(username)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 
 	/** 
 	  * serialize
