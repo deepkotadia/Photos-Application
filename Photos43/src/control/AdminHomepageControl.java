@@ -122,8 +122,8 @@ public class AdminHomepageControl {
 			   
 			   users.add(tempUser);
 			   populatenameandusername();
-			   //ulist.addUser(tempUser.getUsername(), tempUser.getName());
-			   //PhotoAlbumManager.serialize(ulist);
+			   ulist.addUser(tempUser.getUsername(), tempUser.getName());
+			   PhotoAlbumManager.serialize(ulist);
 			   			   
 			   //if this is first user added, then select it
 			   if (obsList.size() == 1) {
