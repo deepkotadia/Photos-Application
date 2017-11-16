@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -17,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -49,12 +51,16 @@ public class AdminHomepageControl {
 	 */
 	public void start(Stage MainStage) throws ClassNotFoundException, IOException {
 		
-		ulist = PhotoAlbumManager.deserialize();
-		users = ulist.getusers();
+		//ulist = PhotoAlbumManager.deserialize();
+		//users = ulist.getusers();
 		populatenameandusername();
 		
 		obsList = FXCollections.observableArrayList(nameandusername);               
 	    listView.setItems(obsList);
+	    
+	    if(!obsList.isEmpty()) {
+	    		listView.getSelectionModel().select(0); //select first user
+	    }
 	    
 		
 	}
@@ -63,7 +69,7 @@ public class AdminHomepageControl {
 	  * 
 	  * Prompts Admin to add new User, adds it to the main arraylist
 	  */
-	protected void handleAddUser(ActionEvent event) throws IOException {
+	public void handleAddUser(ActionEvent event) throws IOException {
 		   
 		   Dialog<User> dialog = new Dialog<>();
 		   dialog.setTitle("Create a New User");
@@ -112,9 +118,12 @@ public class AdminHomepageControl {
 		   if (result.isPresent()) {
 			   User tempUser = (User) result.get(); //store result
 			   //ulist.addUserToList(tempUser);
-			   obsList.add("Name: " + tempUser.getName() + ", " + "UserName: " + tempUser.getUsername());
+			   //obsList.add("Name: " + tempUser.getName() + ", " + "UserName: " + tempUser.getUsername());
+			   
 			   users.add(tempUser);
-			   PhotoAlbumManager.serialize(ulist);
+			   populatenameandusername();
+			   //ulist.addUser(tempUser.getUsername(), tempUser.getName());
+			   //PhotoAlbumManager.serialize(ulist);
 			   			   
 			   //if this is first user added, then select it
 			   if (obsList.size() == 1) {
@@ -131,7 +140,6 @@ public class AdminHomepageControl {
 						  listView.getSelectionModel().select(index);
 						  break;
 					   }
-					   
 					   index++;
 				   }
 			   }	   
@@ -160,12 +168,57 @@ public class AdminHomepageControl {
 	/**
 	  * 
 	  * Delete selected user from list
+	 * @throws IOException 
 	  */
-	protected void handleDeleteUser(ActionEvent event) {
+	public void handleDeleteUser(ActionEvent event) throws IOException {
 		
+		int userindex = listView.getSelectionModel().getSelectedIndex();
+		   
+		   Alert alert = new Alert(AlertType.CONFIRMATION);
+		   alert.setTitle("Confirm Delete");
+		   alert.setHeaderText(null);
+		   alert.setContentText("Are you sure you want to delete this User?");
+
+		   Optional<ButtonType> result = alert.showAndWait();
+		   if (result.get() == ButtonType.OK) { // ... user chose OK
+			   String userName = users.get(userindex).getUsername();
+			   users.remove(userindex);
+			   populatenameandusername();
+			   ulist.removeUser(userName);
+			   PhotoAlbumManager.serialize(ulist);
+			   
+			   if(users.size() == 0) {
+					DeleteBtn.setVisible(false);
+		       }
+			   else {
+				   int lastuserindex = users.size();
+				   if(users.size() == 1) { //only one user remaining in list, so select it and display its details
+					   listView.getSelectionModel().select(0);
+				   }
+				   else if(userindex == lastuserindex) { //deleted user was last user in the list, so select previous user, previous user is now last user
+					   listView.getSelectionModel().select(lastuserindex-1);
+				   }
+				   else { //not the last user, so select next user
+					   listView.getSelectionModel().select(userindex);
+				   }
+			   }
+			      
+		   } else { // ... user chose CANCEL or closed the dialog
+			   return;
+		   }
+		   return;
+
 	}
 	
 	
+	public void handleLogout(ActionEvent event) {
+		return;
+	}
+	
+	
+	/**
+	  * Populates the nameandusername list to be displayed in the list to admin
+	  */
 	public static void populatenameandusername(){
 		
 		for(int i = 0; i < users.size(); i++) {

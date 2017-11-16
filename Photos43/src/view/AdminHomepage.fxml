@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.AdminHomepageControl">
    <children>
       <Label layoutX="360.0" layoutY="27.0" prefHeight="34.0" prefWidth="132.0" text="List of Users" textFill="#510d75">
          <font>
@@ -24,6 +24,6 @@
          </font>
       </Button>
       <Button fx:id="LogoutBtn" layoutX="536.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
-      <ListView fx:id="UserListView" layoutX="306.0" layoutY="60.0" prefHeight="324.0" prefWidth="240.0" />
+      <ListView fx:id="listView" layoutX="306.0" layoutY="60.0" prefHeight="324.0" prefWidth="240.0" />
    </children>
 </AnchorPane>
