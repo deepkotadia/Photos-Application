@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.UserHomepageControl">
    <children>
@@ -21,9 +22,9 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </Button>
-      <TitledPane animated="false" collapsible="false" layoutX="233.0" layoutY="-1.0" prefHeight="26.0" prefWidth="100.0" text="Homepage " textFill="#341fd1">
+      <TitledPane animated="false" collapsible="false" layoutX="262.0" layoutY="3.0" prefHeight="17.0" prefWidth="101.0" text="Homepage " textFill="#341fd1">
          <font>
-            <Font name="Arial Black" size="13.0" />
+            <Font name="Arial Black" size="10.0" />
          </font></TitledPane>
       <Separator layoutY="55.0" prefHeight="6.0" prefWidth="600.0" />
       <Label layoutX="14.0" layoutY="34.0" text="Your Albums" textFill="#9f20ab">
@@ -34,7 +35,6 @@
       <MenuButton fx:id="AlbumOption" layoutX="538.0" layoutY="31.0" mnemonicParsing="false" text=". . .">
         <items>
           <MenuItem mnemonicParsing="false" text="View Album" />
-          <MenuItem mnemonicParsing="false" text="Add Album" />
           <MenuItem mnemonicParsing="false" text="Delete Album" />
           <MenuItem mnemonicParsing="false" text="Rename Album" />
         </items>
@@ -49,5 +49,11 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
+      <Button fx:id="addAlbum" layoutX="486.0" layoutY="31.0" mnemonicParsing="false" text="+" />
+      <Text fx:id="welcomeText" fill="#1f6f22" layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="166.13671875">
+         <font>
+            <Font name="Nirmala UI" size="15.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
