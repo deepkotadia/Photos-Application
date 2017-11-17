@@ -24,6 +24,6 @@
          </font>
       </Button>
       <Button fx:id="LogoutBtn" layoutX="536.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
-      <ListView fx:id="listView" layoutX="306.0" layoutY="60.0" prefHeight="324.0" prefWidth="240.0" />
+      <ListView fx:id="listView" layoutX="266.0" layoutY="60.0" prefHeight="324.0" prefWidth="323.0" />
    </children>
 </AnchorPane>

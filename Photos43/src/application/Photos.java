@@ -31,7 +31,7 @@ public class Photos extends Application {
 			//LoginControl loginController = loader.getController();
 		    //loginController.start(mainStage);
 			
-			Scene scene = new Scene(root,700,500);
+			Scene scene = new Scene(root,600,400);
 			mainStage.setScene(scene);
 			mainStage.setTitle("Photo Album");
 			mainStage.setResizable(false);
