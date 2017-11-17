@@ -122,8 +122,12 @@ public class AdminHomepageControl {
 			   //obsList.add("Name: " + tempUser.getName() + ", " + "UserName: " + tempUser.getUsername());
 			   
 			   //users.add(tempUser);
-			   populatenameandusername();
+			   
 			   ulistmanager.addUser(tempUser.getUsername(), tempUser.getName());
+			   populatenameandusername();
+			   listView.refresh();
+			   obsList=FXCollections.observableArrayList(nameandusername);
+			   listView.setItems(obsList);
 			   PhotoAlbumManager.serialize(ulistmanager);
 			   			   
 			   //if this is first user added, then select it
@@ -184,8 +188,12 @@ public class AdminHomepageControl {
 		   if (result.get() == ButtonType.OK) { // ... user chose OK
 			   String userName = ulistmanager.getusers().get(userindex).getUsername();
 			   //users.remove(userindex);
-			   populatenameandusername();
+			   
 			   ulistmanager.removeUser(userName);
+			   populatenameandusername();
+			   listView.refresh();
+			   obsList=FXCollections.observableArrayList(nameandusername);
+			   listView.setItems(obsList);
 			   PhotoAlbumManager.serialize(ulistmanager);
 			   
 			   if(ulistmanager.getusers().size() == 0) {
@@ -221,6 +229,8 @@ public class AdminHomepageControl {
 	  * Populates the nameandusername list to be displayed in the list to admin
 	  */
 	public static void populatenameandusername(){
+		
+		nameandusername.clear();
 		
 		for(int i = 0; i < ulistmanager.getusers().size(); i++) {
 			nameandusername.add("Name: " + ulistmanager.getusers().get(i).getName() + ", " + "UserName: " + ulistmanager.getusers().get(i).getUsername());
