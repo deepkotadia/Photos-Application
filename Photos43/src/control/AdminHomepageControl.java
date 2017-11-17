@@ -32,7 +32,7 @@ import model.*;
  *
  * This class controls the Admin's Home Page
  */
-public class AdminHomepageControl {
+public class AdminHomepageControl implements LogoutInterface {
 	
 	@FXML         
 	   ListView<String> listView;      
@@ -50,7 +50,7 @@ public class AdminHomepageControl {
 	 * @throws ClassNotFoundException 
 	 * 
 	 */
-	public void start(Stage MainStage) throws ClassNotFoundException, IOException {
+	public void start(Stage App_Stage) throws ClassNotFoundException, IOException {
 		
 		//ulist = PhotoAlbumManager.deserialize();
 		//users = ulist.getusers();
@@ -74,7 +74,7 @@ public class AdminHomepageControl {
 		   
 		   Dialog<User> dialog = new Dialog<>();
 		   dialog.setTitle("Create a New User");
-		   dialog.setHeaderText("Add a New User");
+		   dialog.setHeaderText("Add Details of New User");
 		   dialog.setResizable(true);
 		   
 		   Label usernameLabel = new Label("Username: ");
@@ -100,10 +100,21 @@ public class AdminHomepageControl {
 					   
 					   String error = checkFields(usernameTextField.getText(),nameTextField.getText());
 					   
-					   /*if (error != null) {
-						   showError(error);
+					   if (error != null) {
+						   Alert alert = new Alert(AlertType.ERROR);
+						   alert.setTitle("Error Dialog");
+						   alert.setHeaderText(error);
+						   alert.setContentText("Please try again");
+
+						   Optional<ButtonType> buttonClicked=alert.showAndWait();
+						   if (buttonClicked.get()==ButtonType.OK) {
+							   alert.close();
+						   }
+						   else {
+							   alert.close();
+						   }
 						   return null;
-					   }*/
+					   }
 											   
 					   return new User(usernameTextField.getText().trim(),nameTextField.getText().trim(), false);
 				   }
@@ -221,16 +232,20 @@ public class AdminHomepageControl {
 	
 	
 	public void handleLogout(ActionEvent event) {
-		return;
+		try {
+			logoutfnc(event); //logout function from LogoutInterface
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
 	/**
-	  * Populates the nameandusername list to be displayed in the list to admin
+	  * (re)Populates the nameandusername list to be displayed in the list to admin
 	  */
 	public static void populatenameandusername(){
 		
-		nameandusername.clear();
+		nameandusername.clear(); //refresh the list
 		
 		for(int i = 0; i < ulistmanager.getusers().size(); i++) {
 			nameandusername.add("Name: " + ulistmanager.getusers().get(i).getName() + ", " + "UserName: " + ulistmanager.getusers().get(i).getUsername());
