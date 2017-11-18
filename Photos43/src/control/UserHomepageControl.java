@@ -40,7 +40,7 @@ public class UserHomepageControl implements LogoutInterface {
 
 	public void start(Stage app_stage) {
 		
-		welcomeText.setText("Welcome, " + Photos.manager.getCurrentUser().getUsername() + "!");
+		welcomeText.setText("Welcome, " + Photos.manager.getCurrentUser().getName() + "!");
 		populateAlbumList();
 			
 		obsList = FXCollections.observableArrayList(albumsOfUser);   
