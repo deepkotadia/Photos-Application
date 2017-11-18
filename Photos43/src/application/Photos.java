@@ -71,12 +71,12 @@ public class Photos extends Application {
 		}
 		
 		
-		List<User> users = new ArrayList<User>();
+		/*List<User> users = new ArrayList<User>();
 		
 		users = manager.getusers();
 		int stockIndex = users.indexOf(new User("stock", "stock photos", false));
 		User stockuser = users.get(stockIndex);
-		stockuser.addAlbum("test album");
+		stockuser.addAlbum("test album");*/
 		
 		
 		launch(args);
