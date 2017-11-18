@@ -184,7 +184,7 @@ public class AdminHomepageControl implements LogoutInterface {
 	/**
 	  * 
 	  * Delete selected user from list
-	 * @throws IOException 
+	  * @throws IOException 
 	  */
 	public void handleDeleteUser(ActionEvent event) throws IOException {
 		
@@ -230,7 +230,10 @@ public class AdminHomepageControl implements LogoutInterface {
 
 	}
 	
-	
+	/**
+	  * 
+	  * Logs out the current user's session
+	  */
 	public void handleLogout(ActionEvent event) {
 		try {
 			logoutfnc(event); //logout function from LogoutInterface

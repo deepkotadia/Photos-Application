@@ -70,12 +70,14 @@ public class Photos extends Application {
 			e.printStackTrace();
 		}
 		
+		/*
 		List<User> users = new ArrayList<User>();
 		
 		users = manager.getusers();
 		int stockIndex = users.indexOf(new User("stock", "stock photos", false));
 		User stockuser = users.get(stockIndex);
 		stockuser.addAlbum("test album");
+		*/
 		
 		launch(args);
 	}

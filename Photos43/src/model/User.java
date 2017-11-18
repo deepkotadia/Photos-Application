@@ -31,9 +31,8 @@ public class User implements Serializable {
 		albums.add(newAlbum);		
 	}
 	
-	public void removeAlbum(String albumName) {
-		Album removeAlbum = new Album(albumName);
-		albums.remove(removeAlbum);
+	public void removeAlbum(int index) {
+		albums.remove(index);
 	}
 	
 	@Override
