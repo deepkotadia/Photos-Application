@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fx:id="albumname" fill="#1f6f22" layoutX="182.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Name" wrappingWidth="253.13671875">
+         <font>
+            <Font name="Nirmala UI" size="15.0" />
+         </font>
+      </Text>
+      <Button fx:id="logoutBtn" layoutX="540.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout">
+         <font>
+            <Font name="Bookman Old Style" size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Button>
+      <Button fx:id="backBtn" layoutX="8.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleBack" text="Back">
+         <font>
+            <Font name="Bookman Old Style" size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Button>
+      <ImageView fx:id="albumImage" fitHeight="90.0" fitWidth="90.0" layoutX="102.0" layoutY="48.0" preserveRatio="true">
+         <image>
+            <Image url="@../../stockphotos/thumbnail.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="albumDateRange" layoutX="206.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="old month yr - new month yr" />
+      <Text fx:id="numphotos" layoutX="206.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Photos" />
+      <Button fx:id="addPhoto" layoutX="491.0" layoutY="83.0" mnemonicParsing="false" onAction="#handleAddPhoto" text="+" />
+      <MenuButton fx:id="photoOptions" layoutX="543.0" layoutY="83.0" mnemonicParsing="false" text=". . .">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+         <items>
+            <MenuItem fx:id="viewPhoto" mnemonicParsing="false" onAction="#handleViewPhoto" text="View Photo" />
+            <MenuItem fx:id="deletePhoto" mnemonicParsing="false" onAction="#handleDeletePhoto" text="Delete Photo" />
+         </items>
+      </MenuButton>
+      <ListView fx:id="albumPhotoList" layoutX="102.0" layoutY="151.0" prefHeight="242.0" prefWidth="372.0" />
+   </children>
+</AnchorPane>
