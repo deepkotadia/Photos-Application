@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import application.Photos;
+
 /**
  * @author Deep Kotadia
  * @author Chinmoyi Bhushan
@@ -15,6 +17,7 @@ public class User implements Serializable {
 	private String name;
 	private boolean isAdmin;
 	private List<Album> albums;
+	private Album currentAlbum;
 
 	/**
 	 * 
@@ -65,6 +68,14 @@ public class User implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public Album getcurrentAlbum() {
+		return currentAlbum;
+	}
+	
+	public void setcurrentAlbum(Album currentAlbum) {
+		this.currentAlbum = currentAlbum;
 	}
 	
 	public List<Album> getAlbums(){

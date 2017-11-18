@@ -13,7 +13,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -354,6 +358,29 @@ public class UserHomepageControl implements LogoutInterface {
 	  * Opens selected album in new window displaying all its photos
 	  */
 	public void handleViewAlbum(ActionEvent event) throws IOException {
+		
+		Parent parent;
+		
+		//User currentUser = Photos.manager.getCurrentUser();
+		int albumindex = albumsList.getSelectionModel().getSelectedIndex();    
+		//String albumname = albumsOfUser.get(albumindex).getAlbumName();
+		int currentUserIndex = Photos.manager.getcurrentUserIndex();
+		Album album = Photos.manager.getusers().get(currentUserIndex).getAlbums().get(albumindex);
+		
+		Photos.manager.getusers().get(currentUserIndex).setcurrentAlbum(album); //set as current album
+		
+		/*Load the selected Album's Page*/
+		FXMLLoader loader= new FXMLLoader(getClass().getResource("/view/SingleAlbum.fxml"));
+		parent = (Parent)loader.load();
+		UserHomepageControl ctrl = loader.getController();
+		Scene scene = new Scene(parent);
+					
+		Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();	
+	                
+		ctrl.start(app_stage);
+	             
+	    app_stage.setScene(scene);
+	    app_stage.show();
 		
 	}
 	

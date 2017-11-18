@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import application.Photos;
+
 /**
  * @author Deep Kotadia
  * @author Chinmoyi Bhushan
@@ -116,6 +118,18 @@ public class PhotoAlbumManager implements Serializable {
 		}
 		
 		return false;
+	}
+	
+	
+	public int getcurrentUserIndex() {
+		int index = 0;
+		for(User u : users) {
+			if(u.getUsername().equals(Photos.manager.getCurrentUser().getUsername())) {
+				return index;
+			}
+			index++;
+		}
+		return -1;
 	}
 	
 
