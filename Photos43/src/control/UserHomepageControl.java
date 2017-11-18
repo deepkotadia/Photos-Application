@@ -133,14 +133,14 @@ public class UserHomepageControl implements LogoutInterface {
 			
 			AnchorPane.setLeftAnchor(stackpane, 0.0);
 			
-			AnchorPane.setLeftAnchor(albumName, 100.0);
+			AnchorPane.setLeftAnchor(albumName, 400.0);
 			AnchorPane.setTopAnchor(albumName, 0.0);
 			
-			AnchorPane.setLeftAnchor(dateRange, 100.0);
+			AnchorPane.setLeftAnchor(dateRange, 400.0);
 			AnchorPane.setTopAnchor(dateRange, 15.0);
 		
-			AnchorPane.setLeftAnchor(numberOfPhotos, 100.0);
-			AnchorPane.setTopAnchor(numberOfPhotos, 45.0);
+			AnchorPane.setLeftAnchor(numberOfPhotos, 400.0);
+			AnchorPane.setTopAnchor(numberOfPhotos, 40.0);
 			
 			anchor.getChildren().addAll(stackpane, albumName, dateRange, numberOfPhotos);
 			
@@ -170,8 +170,7 @@ public class UserHomepageControl implements LogoutInterface {
 			else{//(album != null){
 				//imageView.setImage(album.getAlbumPhoto());
 				albumName.setText("Album name: " + album.getAlbumName());
-				//dateRangeLabel.setText(album.getDateRange());
-				//oldestPhotoLabel.setText("Oldest Photo: " + album.getOldestPhotoDate());
+				//dateRangeLabel.setText();
 				numberOfPhotos.setText("Number of Photos: " + album.getPhotos().size());
 			}
 			

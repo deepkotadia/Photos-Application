@@ -58,7 +58,7 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	@FXML MenuItem viewPhoto, deletePhoto;
 	
-	@FXML ListView photosList;
+	@FXML ListView<Photo> photosList;
 	
 	private ObservableList<Photo> obsList;
 	private static List<Photo> photosInAlbum = new ArrayList<Photo>();

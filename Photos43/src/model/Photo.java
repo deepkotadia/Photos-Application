@@ -2,6 +2,7 @@ package model;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,10 +11,12 @@ import java.util.List;
  *
  */
 public class Photo implements Serializable {
+
 	
 	private String photoPath;
 	private List<String> nameTags;
 	private List<String> locationTags;
+	private Date dateAdded;
 	
 	/**
 	 * 
@@ -22,6 +25,8 @@ public class Photo implements Serializable {
 		this.photoPath = photoPath;
 		nameTags = new ArrayList<String>();
 		locationTags = new ArrayList<String>();
+		File photoFile = new File(photoPath);
+		this.dateAdded = new Date(photoFile.lastModified());
 	}
 
 	public void addNameTag(String nameTag) {
@@ -71,5 +76,9 @@ public class Photo implements Serializable {
 	
 	public List<String> getLocationTag(){
 		return locationTags;
+	}
+
+	public Date getDateAdded() {
+		return dateAdded;
 	}
 }

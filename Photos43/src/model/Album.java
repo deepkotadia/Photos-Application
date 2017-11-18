@@ -12,10 +12,15 @@ import java.util.List;
  *
  */
 public class Album implements Serializable {
-	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1501113523008844050L;
 	private String albumName;
 	private Date dateCreated;
 	private List<Photo> photos;
+	private Date minDate, maxDate;
 
 	/**
 	 * 
@@ -23,17 +28,69 @@ public class Album implements Serializable {
 	public Album(String albumName) {
 		this.albumName = albumName;
 		this.dateCreated = new Date();
+		this.minDate = null;
+		this.maxDate = null;
 		photos = new ArrayList<Photo>();
 	}
 	
 	public void addPhoto(String photoPath) {
 		Photo newPhoto = new Photo(photoPath);
 		photos.add(newPhoto);
+		
+		if(photos.size() == 1) {
+			maxDate = newPhoto.getDateAdded();
+			minDate = newPhoto.getDateAdded();
+		}
+		
+		else if(newPhoto.getDateAdded().compareTo(maxDate) > 0) {
+			this.maxDate = newPhoto.getDateAdded();
+		}
+		
+		else if(newPhoto.getDateAdded().compareTo(minDate) < 0) {
+			this.minDate = newPhoto.getDateAdded();
+		}
 	}
 	
 	public void removePhoto(String photoPath) {
 		Photo photoToRemove = new Photo(photoPath);
-		photos.remove(photoToRemove);		
+		photos.remove(photoToRemove);
+		
+		if(photos.isEmpty()) {
+			maxDate = null;
+			minDate = null;
+		}
+		
+		else if(photoToRemove.getDateAdded().compareTo(minDate) == 0){
+			this.refreshMinDate();
+		}
+		
+		else if(photoToRemove.getDateAdded().compareTo(maxDate) == 0) {
+			this.refreshMaxDate();
+		}
+	}
+	
+	private void refreshMinDate() {
+		Date newMinDate = photos.get(0).getDateAdded();
+		
+		for (Photo p : photos){
+			if (p.getDateAdded().compareTo(newMinDate) < 0) {
+				newMinDate = p.getDateAdded();
+			}
+		}
+		
+		this.minDate = newMinDate;	
+	}
+	
+	private void refreshMaxDate() {
+		Date newMaxDate = photos.get(0).getDateAdded();
+		
+		for (Photo p : photos) {
+			if (p.getDateAdded().compareTo(newMaxDate) > 0) {
+				newMaxDate = p.getDateAdded();
+			}
+		}
+		
+		this.maxDate = newMaxDate;
 	}
 	
 	@Override
@@ -74,4 +131,11 @@ public class Album implements Serializable {
 		return photos;
 	}
 
+	public Date getMinDate() {
+		return minDate;
+	}
+
+	public Date getMaxDate() {
+		return maxDate;
+	}
 }
