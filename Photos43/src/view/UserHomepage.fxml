@@ -7,7 +7,6 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -22,10 +21,6 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </Button>
-      <TitledPane animated="false" collapsible="false" layoutX="262.0" layoutY="3.0" prefHeight="17.0" prefWidth="101.0" text="Homepage " textFill="#341fd1">
-         <font>
-            <Font name="Arial Black" size="10.0" />
-         </font></TitledPane>
       <Separator layoutY="55.0" prefHeight="6.0" prefWidth="600.0" />
       <Label layoutX="14.0" layoutY="34.0" text="Your Albums" textFill="#9f20ab">
          <font>
@@ -50,7 +45,7 @@
          </font>
       </Button>
       <Button fx:id="addAlbum" layoutX="486.0" layoutY="31.0" mnemonicParsing="false" text="+" />
-      <Text fx:id="welcomeText" fill="#1f6f22" layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="166.13671875">
+      <Text fx:id="welcomeText" fill="#1f6f22" layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="429.13671875">
          <font>
             <Font name="Nirmala UI" size="15.0" />
          </font>
