@@ -9,7 +9,11 @@ import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import model.PhotoAlbumManager;
+import model.User;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Photos extends Application {
@@ -65,6 +69,14 @@ public class Photos extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		List<User> users = new ArrayList<User>();
+		
+		users = manager.getusers();
+		int stockIndex = users.indexOf(new User("stock", "stock photos", false));
+		User stockuser = users.get(stockIndex);
+		stockuser.addAlbum("test album");
+		
 		launch(args);
 	}
 }
