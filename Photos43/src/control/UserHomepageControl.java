@@ -59,6 +59,8 @@ public class UserHomepageControl implements LogoutInterface {
 	private ObservableList<Album> obsList;
 	private static List<Album> albumsOfUser = new ArrayList<Album>();
 	
+	int addorrename = -1; //0 if call from add, 1 if call from rename
+	
 	public void start(Stage app_stage) {
 		
 		welcomeText.setText("Welcome, " + Photos.manager.getCurrentUser().getName() + "!");
@@ -178,6 +180,8 @@ public class UserHomepageControl implements LogoutInterface {
 	  * Prompts User to add new Album, adds it to the main arraylist in PhotoAlbumManager
 	  */
 	public void handleAddAlbum(ActionEvent event) throws IOException {
+		
+		addorrename = 0;
 		   
 		   Dialog<Album> dialog = new Dialog<>();
 		   dialog.setTitle("Create a New Album");
@@ -276,9 +280,11 @@ public class UserHomepageControl implements LogoutInterface {
 		   if (albumname.trim().isEmpty())
 			   return "Albumname is a required field.";
 		   
-		   for(int i = 0; i < albumsOfUser.size(); i++) {
-			   if(albumsOfUser.get(i).getAlbumName().equals(albumname)) { //duplicate album name not allowed
-				   return "An album with the same name already exists in your account, please try another name.";
+		   if(addorrename != 1) { //need not do this for rename
+			   for(int i = 0; i < albumsOfUser.size(); i++) {
+				   if(albumsOfUser.get(i).getAlbumName().equals(albumname)) { //duplicate album name not allowed
+					   return "An album with the same name already exists in your account, please try another name.";
+				   }
 			   }
 		   }
 		   
@@ -357,6 +363,99 @@ public class UserHomepageControl implements LogoutInterface {
 	  * Allows User to Rename a selected Album
 	  */
 	public void handleRenameAlbum(ActionEvent event) throws IOException {
+		
+		addorrename = 1;
+		
+		int albumindex = albumsList.getSelectionModel().getSelectedIndex();    
+		String oldname = albumsOfUser.get(albumindex).getAlbumName();
+		
+		   Dialog<String> dialog = new Dialog<>();
+		   dialog.setTitle("Rename Album");
+		   //dialog.setHeaderText("Add Name of New Album");
+		   dialog.setResizable(true);
+		   
+		   Label albumnameLabel = new Label("Album Name: ");
+		   TextField albumnameTextField = new TextField();
+		   albumnameTextField.setText(oldname);
+		   albumnameTextField.selectAll();
+		   
+		   GridPane grid = new GridPane();
+		   grid.add(albumnameLabel, 1, 1);
+		   grid.add(albumnameTextField, 2, 1);
+		   
+		   dialog.getDialogPane().setContent(grid);
+		   
+		   ButtonType buttonTypeOk = new ButtonType("Rename", ButtonData.OK_DONE);
+		   dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+		   
+		   dialog.setResultConverter(new Callback<ButtonType, String>() {
+			   @Override
+			   public String call(ButtonType b) {
+				   if (b == buttonTypeOk) {
+					   
+					   String error = checkFields(albumnameTextField.getText());
+					   
+					   if (error != null) {
+						   Alert alert = new Alert(AlertType.ERROR);
+						   alert.setTitle("Error Dialog");
+						   alert.setHeaderText(error);
+						   alert.setContentText("Please try again");
+
+						   Optional<ButtonType> buttonClicked=alert.showAndWait();
+						   if (buttonClicked.get()==ButtonType.OK) {
+							   alert.close();
+						   }
+						   else {
+							   alert.close();
+						   }
+						   return null;
+					   }
+											   
+					   return albumnameTextField.getText().trim();
+				   }
+				   return null;
+			   }
+			
+		   });
+		   
+		   //wait for response from add button
+		   Optional<String> result = dialog.showAndWait();
+		   
+		   // if user presses Rename, rename the album to the new name
+		   if (result.isPresent()) {
+			   String newAlbumName = result.get(); //store result
+			   
+			   Photos.manager.getCurrentUser().getAlbums().get(albumindex).setAlbumName(newAlbumName);
+			   populateAlbumList();
+			   albumsList.refresh();
+			   obsList=FXCollections.observableArrayList(albumsOfUser);
+			   /*Render in proper UI*/
+			   albumsList.setCellFactory(new Callback<ListView<Album>, ListCell<Album>>(){
+					@Override
+					public ListCell<Album> call(ListView<Album> p){
+						return new EachAlbum();
+					}
+					
+				});
+			   albumsList.setItems(obsList);
+			   
+			   PhotoAlbumManager.serialize(Photos.manager);
+			   			   
+			   //if this is first album added, then select it
+			   if (obsList.size() == 1) {
+				   albumsList.getSelectionModel().select(0);
+			   }
+			   else{
+				   int index = 0;
+				   for(Album s: albumsOfUser){
+					   if(s.getAlbumName().equals(newAlbumName)){
+						  albumsList.getSelectionModel().select(index);
+						  break;
+					   }
+					   index++;
+				   }
+			   }	   
+		   }
 		
 	}
 	
