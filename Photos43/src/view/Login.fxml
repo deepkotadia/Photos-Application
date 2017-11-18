@@ -23,7 +23,7 @@
       <Sphere layoutX="53.0" layoutY="277.0" radius="10.0" />
       <ImageView blendMode="SRC_ATOP" fitHeight="207.0" fitWidth="395.0" layoutX="197.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../docs/login_cover.jpg" />
+            <Image url="@../../stockphotos/login_cover.jpg" />
          </image>
       </ImageView>
       <Button fx:id="userLogin" layoutX="185.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleLoginBtn" onMouseClicked="#handleLoginBtn" prefHeight="25.0" prefWidth="92.0" text="Login">

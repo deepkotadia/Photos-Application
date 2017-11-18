@@ -39,13 +39,13 @@ public class UserHomepageControl implements LogoutInterface {
 	private static List<Album> albumsOfUser = new ArrayList<Album>();
 
 	public void start(Stage app_stage) {
-		// TODO Auto-generated method stub
-		welcomeText.setText("Welcome, " + Photos.manager.getCurrentUser().getUsername() + "!");
-		//populateAlbumList();
 		
-		obsList = FXCollections.observableArrayList(albumsOfUser);               
-	    albumsList.setItems(obsList);
-	    
+		welcomeText.setText("Welcome, " + Photos.manager.getCurrentUser().getUsername() + "!");
+		populateAlbumList();
+			
+		obsList = FXCollections.observableArrayList(albumsOfUser);   
+		albumsList.setItems(obsList);
+		
 	    if(!obsList.isEmpty()) {
 	    		albumsList.getSelectionModel().select(0); //select first album of user
 	    }
@@ -55,14 +55,14 @@ public class UserHomepageControl implements LogoutInterface {
 	/**
 	  * Populates the list of Albums for the user
 	  */
-	//public static void populateAlbumList(){
+	public static void populateAlbumList(){
 		
-	//	albumsOfUser.clear(); //refresh the list
+		albumsOfUser.clear(); //refresh the list
 		
-		//for(int i = 0; i < Photos.manager.getusers().size(); i++) {
-			//albumsOfUser.add(Photos.manager.getusers().get(i).getAlbums());
-		//}	
-	//}
+		for(int i = 0; i < Photos.manager.getCurrentUser().getAlbums().size(); i++) {
+			albumsOfUser.add(Photos.manager.getCurrentUser().getAlbums().get(i));
+		}	
+	}
 	
 	public void handleLogout(ActionEvent event) {
 		try {
