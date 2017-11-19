@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="imgslide" fitHeight="239.0" fitWidth="357.0" layoutX="122.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../stockphotos/slideshow.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="prev" layoutX="46.0" layoutY="126.0" mnemonicParsing="false" text="&lt;" />
+      <Button fx:id="next" layoutX="519.0" layoutY="134.0" mnemonicParsing="false" text="&gt;" />
+      <Text fx:id="albumname" fill="#1f6f22" layoutX="231.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Name" wrappingWidth="253.13671875">
+         <font>
+            <Font name="Nirmala UI" size="15.0" />
+         </font>
+      </Text>
+      <Button fx:id="backBtn" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleBack" text="Back">
+         <font>
+            <Font name="Bookman Old Style" size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Button>
+      <Button fx:id="logoutBtn" layoutX="538.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout">
+         <font>
+            <Font name="Bookman Old Style" size="13.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Button>
+      <TextArea fx:id="tags" layoutX="123.0" layoutY="283.0" prefHeight="103.0" prefWidth="341.0" />
+      <MenuButton fx:id="tagOptions" layoutX="508.0" layoutY="283.0" mnemonicParsing="false" text="Tag">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+         <items>
+            <MenuItem fx:id="AddTag" mnemonicParsing="false" onAction="#handleAddTag" text="Add Tag" />
+            <MenuItem fx:id="DeleteTag" mnemonicParsing="false" onAction="#handleDeleteTag" text="Delete Tag" />
+         </items>
+      </MenuButton>
+   </children>
+</AnchorPane>

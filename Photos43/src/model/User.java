@@ -2,6 +2,8 @@ package model;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import application.Photos;
@@ -38,9 +40,59 @@ public class User implements Serializable {
 		albums.remove(index);
 	}
 	
+	public List<Photo> getPhotosWithTag(String key, String value){
+		List<Photo> photosWithTag = new ArrayList<Photo>();
+		
+		for(Album userAlbum : albums){
+			for(Photo photo : userAlbum.getPhotos()) {
+				if(photo.doesTagExist(key, value)) {
+					photosWithTag.add(photo);
+				}
+			}
+		}
+		
+		return photosWithTag;
+	}
+	
+	/**
+	 * Dates are inclusive
+	 * @param startDate
+	 * @param endDate
+	 */
+	public List<Photo> getPhotosInDateRange(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay){
+		Calendar calUserStartDate = Calendar.getInstance();
+		calUserStartDate.set(startYear, startMonth, startDay);
+		
+		Calendar calUserEndDate = Calendar.getInstance();
+		calUserEndDate.set(endYear, endMonth, endDay);
+		
+		List<Photo> photosInDateRange = new ArrayList<Photo>();
+		
+		for(Album userAlbum : albums) {
+			for(Photo photo : userAlbum.getPhotos()) {
+				Date photoDate = photo.getDateAdded();
+				Calendar calPhotoDate = Calendar.getInstance();
+				calPhotoDate.setTime(photoDate);
+
+				int photoYear = calPhotoDate.get(Calendar.YEAR);
+				int photoMonth = calPhotoDate.get(Calendar.MONTH) + 1;
+				int photoDay = calPhotoDate.get(Calendar.DAY_OF_MONTH);
+
+				Calendar calPhotoDate2 = Calendar.getInstance();
+				calPhotoDate2.set(photoYear, photoMonth, photoDay);
+				
+				if(calPhotoDate2.compareTo(calUserStartDate) > 0 && calPhotoDate2.compareTo(calUserEndDate) < 0) {
+					photosInDateRange.add(photo);
+				}
+			}
+		}
+		
+		return photosInDateRange;
+	}
+	
 	@Override
 	public boolean equals( Object obj) {
-		if (obj == this)
+		if(obj == this)
 			return true;
 		
 		if(!(obj instanceof User)){
