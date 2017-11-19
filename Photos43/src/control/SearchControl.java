@@ -1,8 +1,7 @@
 package control;
 
-import java.io.IOException;
-import java.util.Optional;
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -35,6 +35,8 @@ import model.Photo;
 public class SearchControl implements LogoutInterface {
 	@FXML Button dateSearch, tagSearch, createAlbum, logoutBtn;
 	
+	@FXML DatePicker startDate, endDate;
+	
 	@FXML ListView<Photo> photosList;
 	
 	@FXML TextArea detailBox;
@@ -49,24 +51,7 @@ public class SearchControl implements LogoutInterface {
 	 * Displays Dialog box for giving date range to search for
 	 */
 	public void handleSearchByDate(ActionEvent event) {
-		   Dialog<Album> dialog = new Dialog<>();
-		   dialog.setTitle("Search for photos by Date");
-		   dialog.setHeaderText("Start Date");
-		   dialog.setResizable(true);
 		   
-		   Label startDateLabel = new Label("Start Date: ");
-		   //TextField albumnameTextField = new TextField();
-		   Label endDateLabel = new Label("End Date: ");
-		   
-		   GridPane grid = new GridPane();
-		   grid.add(startDateLabel, 1, 1);
-		   //grid.add(albumnameTextField, 2, 1);
-		   grid.add(endDateLabel, 2, 1);
-		   
-		   dialog.getDialogPane().setContent(grid);
-		   
-		   ButtonType buttonTypeOk = new ButtonType("OK", ButtonData.OK_DONE);
-		   dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
 		   	  
 	}
 	

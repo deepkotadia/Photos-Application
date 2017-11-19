@@ -12,43 +12,33 @@ import java.util.List;
  *
  */
 public class Photo implements Serializable {
-
 	
 	private String photoPath;
 	private String caption;
-	private List<String> nameTags;
-	private List<String> locationTags;
 	private Date dateAdded;
-	private HashMap<String, String> tags;
+	private HashMap<String, String> tagMap;
 	
 	/**
 	 * 
 	 */
 	public Photo(String photoPath) {
 		this.photoPath = photoPath;
-		nameTags = new ArrayList<String>();
-		locationTags = new ArrayList<String>();
+		this.caption = "";
 		File photoFile = new File(photoPath);
 		this.dateAdded = new Date(photoFile.lastModified());
-		this.caption = "";
-		tags = new HashMap<String, String>();
-	}
-
-	public void addNameTag(String nameTag) {
-		nameTags.add(nameTag);		
+		this.tagMap = new HashMap<String, String>();
 	}
 	
-	public void removeNameTag(String nameTag) {
-		nameTags.remove(nameTag);		
+	public void addTag(String key, String value) {
+		tagMap.put(key, value);
 	}
 	
-	public void addLocationTag(String locationTag) {
-		locationTags.add(locationTag);		
+	public boolean removeTag(String key, String value) {
+		return tagMap.remove(key, value);
 	}
 	
-	public void removeLocationTag(String locationTag) {
-		locationTags.remove(locationTag);
-		
+	public boolean doesTagExist(String key, String value) {
+		return tagMap.containsKey(key) && !(tagMap.get(key) == null);	
 	}
 	
 	@Override
@@ -73,14 +63,6 @@ public class Photo implements Serializable {
 	
 	public String getPhotoPath() {
 		return photoPath;
-	}
-	
-	public List<String> getNameTags(){
-		return nameTags;
-	}
-	
-	public List<String> getLocationTag(){
-		return locationTags;
 	}
 
 	public Date getDateAdded() {

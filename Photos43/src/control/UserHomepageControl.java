@@ -138,13 +138,13 @@ public class UserHomepageControl implements LogoutInterface {
 			
 			AnchorPane.setLeftAnchor(stackpane, 0.0);
 			
-			AnchorPane.setLeftAnchor(albumName, 400.0);
+			AnchorPane.setLeftAnchor(albumName, 200.0);
 			AnchorPane.setTopAnchor(albumName, 0.0);
 			
-			AnchorPane.setLeftAnchor(dateRange, 400.0);
+			AnchorPane.setLeftAnchor(dateRange, 200.0);
 			AnchorPane.setTopAnchor(dateRange, 20.0);
 		
-			AnchorPane.setLeftAnchor(numberOfPhotos, 400.0);
+			AnchorPane.setLeftAnchor(numberOfPhotos, 200.0);
 			AnchorPane.setTopAnchor(numberOfPhotos, 40.0);
 			
 			anchor.getChildren().addAll(stackpane, albumName, dateRange, numberOfPhotos);
