@@ -82,15 +82,8 @@ public class SingleAlbumControl implements LogoutInterface {
 		
 		app_stage.setTitle(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName() + " Album Page");
 		albumname.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName());
-		//numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
 		
 		populatePhotosList();
-		
-		/*if(!(photosInAlbum.isEmpty())) {
-			daterange.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getMinDate().toString() + " - " + Photos.manager.getCurrentUser().getcurrentAlbum().getMaxDate().toString());
-			Image img = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(0).getPhotoPath()).toURI().toString());
-			albumimg.setImage(img);
-		}*/
 			
 		obsList = FXCollections.observableArrayList(photosInAlbum);   
 		
@@ -187,9 +180,6 @@ public class SingleAlbumControl implements LogoutInterface {
 			
 			setGraphic(anchor);	
 			
-			//for (Album userAlbum: Photos.manager.getCurrentUser().getAlbums()) {
-				//albumName.setText("Album name: " + userAlbum.getAlbumName());
-			//}
 		}
 		
 		@Override
