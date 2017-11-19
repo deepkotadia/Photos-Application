@@ -3,6 +3,7 @@ package model;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class Photo implements Serializable {
 	private List<String> nameTags;
 	private List<String> locationTags;
 	private Date dateAdded;
+	private HashMap<String, String> tags;
 	
 	/**
 	 * 
@@ -29,6 +31,7 @@ public class Photo implements Serializable {
 		File photoFile = new File(photoPath);
 		this.dateAdded = new Date(photoFile.lastModified());
 		this.caption = "";
+		tags = new HashMap<String, String>();
 	}
 
 	public void addNameTag(String nameTag) {

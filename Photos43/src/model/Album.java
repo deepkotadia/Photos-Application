@@ -21,6 +21,7 @@ public class Album implements Serializable {
 	private Date dateCreated;
 	private List<Photo> photos;
 	private Date minDate, maxDate;
+	private Photo currentPhoto;
 
 	/**
 	 * 
@@ -137,5 +138,13 @@ public class Album implements Serializable {
 
 	public Date getMaxDate() {
 		return maxDate;
+	}
+	
+	public Photo getcurrentPhoto() {
+		return currentPhoto;
+	}
+	
+	public void setcurrentPhoto(Photo currentPhoto) {
+		this.currentPhoto = currentPhoto;
 	}
 }

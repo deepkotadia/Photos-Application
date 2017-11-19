@@ -72,6 +72,8 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	@FXML ListView<Photo> photosList;
 	
+	@FXML AnchorPane root;
+	
 	private ObservableList<Photo> obsList;
 	private static List<Photo> photosInAlbum = new ArrayList<Photo>();
 	
@@ -266,6 +268,28 @@ public class SingleAlbumControl implements LogoutInterface {
 	  * Let's user open the photo in an enlarged view in a new window
 	  */
 	public void handleViewPhoto(ActionEvent event) throws IOException {
+		
+		Parent parent;
+		
+		int photoindex = photosList.getSelectionModel().getSelectedIndex();    
+		
+		Photo photo = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex);
+		
+		//set as current photo since this is about to open in enlarged view
+		Photos.manager.getCurrentUser().getcurrentAlbum().setcurrentPhoto(photo); //this needs to be re set every time prev and next btns are clicked on slideshow page
+		
+		/*Load the Slideshow Page with selected Photo*/
+		FXMLLoader loader= new FXMLLoader(getClass().getResource("/view/Slideshow.fxml"));
+		parent = (Parent)loader.load();
+		SlideshowControl ctrl = loader.getController();
+		Scene scene = new Scene(parent);
+		
+		Stage app_stage = (Stage) root.getScene().getWindow();	
+	                
+		ctrl.start(app_stage);
+	             
+	    app_stage.setScene(scene);
+	    app_stage.show();
 		
 	}
 	
