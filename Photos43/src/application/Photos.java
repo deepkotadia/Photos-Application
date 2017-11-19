@@ -37,7 +37,7 @@ public class Photos extends Application {
 			
 			Scene scene = new Scene(root,600,400);
 			mainStage.setScene(scene);
-			mainStage.setTitle("Photo Album");
+			mainStage.setTitle("Welcome to Collection! Made by Chinmoyi and Deep");
 			mainStage.setResizable(false);
 			mainStage.show();
 			
@@ -69,14 +69,6 @@ public class Photos extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		/*List<User> users = new ArrayList<User>();
-		
-		users = manager.getusers();
-		int stockIndex = users.indexOf(new User("stock", "stock photos", false));
-		User stockuser = users.get(stockIndex);
-		stockuser.addAlbum("test album");*/
 		
 		
 		launch(args);

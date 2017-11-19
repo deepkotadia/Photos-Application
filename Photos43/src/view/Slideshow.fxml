@@ -8,17 +8,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.SlideshowControl">
    <children>
       <ImageView fx:id="imgslide" fitHeight="239.0" fitWidth="357.0" layoutX="122.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../stockphotos/slideshow.png" />
          </image>
       </ImageView>
-      <Button fx:id="prev" layoutX="46.0" layoutY="126.0" mnemonicParsing="false" text="&lt;" />
-      <Button fx:id="next" layoutX="519.0" layoutY="134.0" mnemonicParsing="false" text="&gt;" />
-      <Text fx:id="albumname" fill="#1f6f22" layoutX="231.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Name" wrappingWidth="253.13671875">
+      <Button fx:id="prev" layoutX="46.0" layoutY="126.0" mnemonicParsing="false" onAction="#handlePrev" text="&lt;" />
+      <Button fx:id="next" layoutX="519.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleNext" text="&gt;" />
+      <Text fx:id="albumname" fill="#1f6f22" layoutX="98.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Name" wrappingWidth="253.13671875">
          <font>
             <Font name="Nirmala UI" size="15.0" />
          </font>
@@ -49,5 +48,6 @@
             <MenuItem fx:id="DeleteTag" mnemonicParsing="false" onAction="#handleDeleteTag" text="Delete Tag" />
          </items>
       </MenuButton>
+      <Text fx:id="numphotos" layoutX="347.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Photos" />
    </children>
 </AnchorPane>

@@ -72,22 +72,25 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	@FXML ListView<Photo> photosList;
 	
+	@FXML AnchorPane root;
+	
 	private ObservableList<Photo> obsList;
 	private static List<Photo> photosInAlbum = new ArrayList<Photo>();
 	
 	
 	public void start(Stage app_stage) {
 		
+		app_stage.setTitle(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName() + " Album Page");
 		albumname.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName());
-		numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
+		//numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
 		
 		populatePhotosList();
 		
-		if(!(photosInAlbum.isEmpty())) {
+		/*if(!(photosInAlbum.isEmpty())) {
 			daterange.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getMinDate().toString() + " - " + Photos.manager.getCurrentUser().getcurrentAlbum().getMaxDate().toString());
 			Image img = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(0).getPhotoPath()).toURI().toString());
 			albumimg.setImage(img);
-		}
+		}*/
 			
 		obsList = FXCollections.observableArrayList(photosInAlbum);   
 		
@@ -111,12 +114,25 @@ public class SingleAlbumControl implements LogoutInterface {
 	/**
 	  * Populates the list of Photos for the selected Album
 	  */
-	public static void populatePhotosList(){
+	public void populatePhotosList(){
 		
 		photosInAlbum.clear(); //refresh the list
 		
 		for(int i = 0; i < Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size(); i++) {
 			photosInAlbum.add(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(i));
+		}
+		
+		if(!(photosInAlbum.isEmpty())) {
+			daterange.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getMinDate().toString() + " - " + Photos.manager.getCurrentUser().getcurrentAlbum().getMaxDate().toString());
+			Image img = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(0).getPhotoPath()).toURI().toString());
+			albumimg.setImage(img);
+			numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
+		}
+		else { //no photos in album, so no thumbnail pic available
+			Image no_thumb = new Image(new File("/Users/deepkotadia/Desktop/Fall 2017/Software Methodology (CS 213)/photoscs213/Photos43/stockphotos/no_thumb.jpg").toURI().toString());
+			albumimg.setImage(no_thumb);
+			numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
+			daterange.setText("-");
 		}
 		
 	}
@@ -266,6 +282,28 @@ public class SingleAlbumControl implements LogoutInterface {
 	  * Let's user open the photo in an enlarged view in a new window
 	  */
 	public void handleViewPhoto(ActionEvent event) throws IOException {
+		
+		Parent parent;
+		
+		int photoindex = photosList.getSelectionModel().getSelectedIndex();    
+		
+		Photo photo = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex);
+		
+		//set as current photo since this is about to open in enlarged view
+		Photos.manager.getCurrentUser().getcurrentAlbum().setcurrentPhoto(photo); //this needs to be re set every time prev and next btns are clicked on slideshow page
+		
+		/*Load the Slideshow Page with selected Photo*/
+		FXMLLoader loader= new FXMLLoader(getClass().getResource("/view/Slideshow.fxml"));
+		parent = (Parent)loader.load();
+		SlideshowControl ctrl = loader.getController();
+		Scene scene = new Scene(parent);
+		
+		Stage app_stage = (Stage) root.getScene().getWindow();	
+	                
+		ctrl.start(app_stage);
+	             
+	    app_stage.setScene(scene);
+	    app_stage.show();
 		
 	}
 	

@@ -71,6 +71,7 @@ public class UserHomepageControl implements LogoutInterface {
 	
 	public void start(Stage app_stage) {
 		
+		app_stage.setTitle(Photos.manager.getCurrentUser().getName() + "'s Collection Homepage");
 		welcomeText.setText("Welcome, " + Photos.manager.getCurrentUser().getName() + "!");
 		populateAlbumList();
 			
@@ -137,13 +138,13 @@ public class UserHomepageControl implements LogoutInterface {
 			
 			AnchorPane.setLeftAnchor(stackpane, 0.0);
 			
-			AnchorPane.setLeftAnchor(albumName, 400.0);
+			AnchorPane.setLeftAnchor(albumName, 200.0);
 			AnchorPane.setTopAnchor(albumName, 0.0);
 			
-			AnchorPane.setLeftAnchor(dateRange, 400.0);
+			AnchorPane.setLeftAnchor(dateRange, 200.0);
 			AnchorPane.setTopAnchor(dateRange, 20.0);
 		
-			AnchorPane.setLeftAnchor(numberOfPhotos, 400.0);
+			AnchorPane.setLeftAnchor(numberOfPhotos, 200.0);
 			AnchorPane.setTopAnchor(numberOfPhotos, 40.0);
 			
 			anchor.getChildren().addAll(stackpane, albumName, dateRange, numberOfPhotos);
@@ -164,7 +165,11 @@ public class UserHomepageControl implements LogoutInterface {
 			super.updateItem(album, empty);
 			
 			setText(null);
-			if(album == null || album.getPhotos().isEmpty()) //album is empty, so no cover photo
+			if(album == null) {
+				return;
+			}
+			
+			else if(album.getPhotos().isEmpty()) //album is empty, so no cover photo
 			{
 				Image no_thumb = new Image(new File("/Users/deepkotadia/Desktop/Fall 2017/Software Methodology (CS 213)/photoscs213/Photos43/stockphotos/no_thumb.jpg").toURI().toString());
 				imageView.setImage(no_thumb);
@@ -177,7 +182,7 @@ public class UserHomepageControl implements LogoutInterface {
 
 			}
 			
-			else{
+			else {
 				Image thumb_img = new Image(new File(album.getPhotos().get(0).getPhotoPath()).toURI().toString());
 				imageView.setImage(thumb_img);
 				albumName.setText("Album name: " + album.getAlbumName());
@@ -185,7 +190,7 @@ public class UserHomepageControl implements LogoutInterface {
 					dateRange.setText(album.getDateCreated() + "");
 				}
 				else {
-					dateRange.setText(album.getMaxDate() + " - " + album.getMinDate());
+					dateRange.setText(album.getMinDate() + " - " + album.getMaxDate());
 				}
 				numberOfPhotos.setText("Number of Photos: " + album.getPhotos().size());
 			}
