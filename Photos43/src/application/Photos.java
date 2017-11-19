@@ -37,7 +37,7 @@ public class Photos extends Application {
 			
 			Scene scene = new Scene(root,600,400);
 			mainStage.setScene(scene);
-			mainStage.setTitle("Photo Album");
+			mainStage.setTitle("Welcome to Collection! Made by Chinmoyi and Deep");
 			mainStage.setResizable(false);
 			mainStage.show();
 			

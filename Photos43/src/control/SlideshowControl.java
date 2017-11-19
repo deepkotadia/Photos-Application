@@ -50,6 +50,7 @@ public class SlideshowControl implements LogoutInterface {
 	
 	public void start(Stage app_stage) {
 		
+		app_stage.setTitle(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName() + " Album Slideshow");
 		albumname.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName());
 		numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
 		

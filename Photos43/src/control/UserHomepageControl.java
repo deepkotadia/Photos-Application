@@ -71,6 +71,7 @@ public class UserHomepageControl implements LogoutInterface {
 	
 	public void start(Stage app_stage) {
 		
+		app_stage.setTitle(Photos.manager.getCurrentUser().getName() + "'s Collection Homepage");
 		welcomeText.setText("Welcome, " + Photos.manager.getCurrentUser().getName() + "!");
 		populateAlbumList();
 			
