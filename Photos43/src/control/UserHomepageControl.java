@@ -501,6 +501,18 @@ public class UserHomepageControl implements LogoutInterface {
 	  */
 	public void handleSearch(ActionEvent event) throws IOException {
 		
+		FXMLLoader loader= new FXMLLoader(getClass().getResource("/view/SearchPage.fxml"));
+		Parent parent = (Parent)loader.load();
+		SearchControl ctrl = loader.getController();
+		Scene scene = new Scene(parent);
+					
+		Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();	
+	                
+		ctrl.start(app_stage);
+	             
+	    app_stage.setScene(scene);
+	    app_stage.show();
+		
 	}
 	
 	
