@@ -3,6 +3,7 @@
  */
 package control;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +31,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Album;
@@ -82,7 +85,7 @@ public class SingleAlbumControl implements LogoutInterface {
 		photosList.setItems(obsList);
 		
 	    if(!obsList.isEmpty()) {
-	    		photosList.getSelectionModel().select(0); //select first album of user
+	    		photosList.getSelectionModel().select(0); //select first photo of album
 	    }
 		
 	}
@@ -162,18 +165,120 @@ public class SingleAlbumControl implements LogoutInterface {
 			setText(null);
 			if(photo == null)
 			{
-				//imageView.setImage(null);
+				Image no_thumb = new Image(new File("/stockphotos/no_thumb.jpg").toURI().toString());
+				imageView.setImage(no_thumb);
 				caption.setText("");
 				
 			}
-			//		setGraphic(null);
-			else{//(photo != null){
-				//imageView.setImage(photo.getPhoto());
-				//caption.setText("Album name: " + photo.getCaption());
-				//dateLabel.setText(photo.getDate());
+			
+			else{
+				Image img = new Image(new File(photo.getPhotoPath()).toURI().toString());
+				imageView.setImage(img);
+				caption.setText("Caption: " + photo.getCaption());
+				//date.setText(photo.getDateAdded());
 				//tags.setText("Tags for this Photo: " + photo.getTags());
 			}
 			
+		}
+	}
+	
+	
+	/**
+	  * 
+	  * Prompts User to add new Photo from computer, adds the filepath to the main arraylist in PhotoAlbumManager
+	  * Displays the photo from the path inside the album in SingleAlbum page
+	  * 
+	  */
+	public void handleAddPhoto(ActionEvent event) throws IOException {
+		
+		String filepath = "";
+		FileChooser fileChooser = new FileChooser();
+		
+		//Set extension filter
+		FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+		FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+		FileChooser.ExtensionFilter extFilterGIF = new FileChooser.ExtensionFilter("GIF files (*.gif)", "*.GIF");
+		fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG, extFilterGIF);
+		
+		//Show open file dialog
+		File imgfile = fileChooser.showOpenDialog(null);
+		if(imgfile == null) return;
+		
+		//Get the absolute path of image file
+		filepath = imgfile.getAbsolutePath();
+		
+		//Add photo to the current album
+		Photos.manager.getCurrentUser().getcurrentAlbum().addPhoto(filepath);
+		
+		populatePhotosList();
+		photosList.refresh();
+		obsList=FXCollections.observableArrayList(photosInAlbum);
+		   /*Render in proper UI*/
+		   photosList.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>(){
+				@Override
+				public ListCell<Photo> call(ListView<Photo> p){
+					return new EachPhoto();
+				}
+				
+			});
+		   photosList.setItems(obsList);
+		   
+		   PhotoAlbumManager.serialize(Photos.manager);
+		   			   
+		   //if this is first photo added in this album, then select it
+		   if (obsList.size() == 1) {
+			   photosList.getSelectionModel().select(0);
+		   }
+		   else{
+			   int index = 0;
+			   for(Photo s: photosInAlbum){
+				   if(s.getPhotoPath().equals(filepath)){
+					  photosList.getSelectionModel().select(index);
+					  break;
+				   }
+				   index++;
+			   }
+		   }	
+		
+	}
+	
+	
+	/**
+	  * 
+	  * Let's user open the photo in an enlarged view in a new window
+	  */
+	public void handleViewPhoto(ActionEvent event) throws IOException {
+		
+	}
+	
+	
+	/**
+	  * 
+	  * Allows user to delete a selected photo from currently open Album
+	  */
+	public void handleDeletePhoto(ActionEvent event) throws IOException {
+		
+	}
+	
+	
+	/**
+	  * 
+	  * Let's user go back to list of albums page (user homepage)
+	  */
+	public void handleBack(ActionEvent event) throws IOException {
+		
+	}
+	
+	
+	/**
+	  * 
+	  * Logs out the current user's session
+	  */
+	public void handleLogout(ActionEvent event) {
+		try {
+			logoutfnc(event); //logout function from LogoutInterface
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 	

@@ -14,6 +14,7 @@ public class Photo implements Serializable {
 
 	
 	private String photoPath;
+	private String caption;
 	private List<String> nameTags;
 	private List<String> locationTags;
 	private Date dateAdded;
@@ -27,6 +28,7 @@ public class Photo implements Serializable {
 		locationTags = new ArrayList<String>();
 		File photoFile = new File(photoPath);
 		this.dateAdded = new Date(photoFile.lastModified());
+		this.caption = "";
 	}
 
 	public void addNameTag(String nameTag) {
@@ -80,5 +82,9 @@ public class Photo implements Serializable {
 
 	public Date getDateAdded() {
 		return dateAdded;
+	}
+	
+	public String getCaption() {
+		return caption;
 	}
 }
