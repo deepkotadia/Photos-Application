@@ -29,6 +29,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
@@ -55,9 +56,17 @@ public class SingleAlbumControl implements LogoutInterface {
 
 	@FXML Button BackBtn, LogoutBtn, addPhoto;
 	
-	@FXML Text daterange, numphotos, albumname;
+	@FXML
+	Text daterange;
+
+	@FXML
+	Text numphotos;
+
+	@FXML
+	Text albumname;
 	
-	@FXML ImageView albumimg;
+	@FXML
+	ImageView albumimg;
 	
 	@FXML MenuItem viewPhoto, deletePhoto;
 	
@@ -70,7 +79,14 @@ public class SingleAlbumControl implements LogoutInterface {
 	public void start(Stage app_stage) {
 		
 		albumname.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName());
+		
 		populatePhotosList();
+		
+		if(!(photosInAlbum.isEmpty())) {
+			daterange.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getMinDate().toString() + " - " + Photos.manager.getCurrentUser().getcurrentAlbum().getMaxDate().toString());
+			Image img = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(0).getPhotoPath()).toURI().toString());
+			albumimg.setImage(img);
+		}
 			
 		obsList = FXCollections.observableArrayList(photosInAlbum);   
 		
@@ -100,7 +116,8 @@ public class SingleAlbumControl implements LogoutInterface {
 		
 		for(int i = 0; i < Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size(); i++) {
 			photosInAlbum.add(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(i));
-		}	
+		}
+		
 	}
 	
 	
@@ -258,6 +275,93 @@ public class SingleAlbumControl implements LogoutInterface {
 	  */
 	public void handleDeletePhoto(ActionEvent event) throws IOException {
 		
+		int photoindex = photosList.getSelectionModel().getSelectedIndex();
+		   
+		   Alert alert = new Alert(AlertType.CONFIRMATION);
+		   alert.setTitle("Confirm Delete");
+		   alert.setHeaderText(null);
+		   alert.setContentText("Are you sure you want to delete this Photo? (There's no going back!)");
+
+		   Optional<ButtonType> result = alert.showAndWait();
+		   if (result.get() == ButtonType.OK) { // ... user chose OK
+			   
+			   Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().remove(photoindex);
+			   populatePhotosList();
+			   photosList.refresh();
+			   obsList=FXCollections.observableArrayList(photosInAlbum);
+			   /*Render in proper UI*/
+			   photosList.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>(){
+					@Override
+					public ListCell<Photo> call(ListView<Photo> p){
+						return new EachPhoto();
+					}
+					
+				});
+			   photosList.setItems(obsList);
+			   
+			   PhotoAlbumManager.serialize(Photos.manager);
+			   
+			   if(photosInAlbum.size() == 0) {
+					deletePhoto.setVisible(false);
+		       }
+			   else {
+				   int lastalbumindex = photosInAlbum.size();
+				   if(photosInAlbum.size() == 1) { //only one photo remaining in list, so select it
+					   photosList.getSelectionModel().select(0);
+				   }
+				   else if(photoindex == lastalbumindex) { //deleted photo was last photo in the list, so select previous photo, previous photo is now last photo
+					   photosList.getSelectionModel().select(lastalbumindex-1);
+				   }
+				   else { //not the last photo, so select next photo
+					   photosList.getSelectionModel().select(photoindex);
+				   }
+			   }
+			      
+		   } else { // ... user chose CANCEL or closed the dialog
+			   return;
+		   }
+		   return;
+		
+	}
+	
+	
+	/**
+	  * 
+	  * Allows user to caption a selected photo from currently open Album
+	  */
+	public void handleCaptionPhoto(ActionEvent event) throws IOException {
+		
+		int photoindex = photosList.getSelectionModel().getSelectedIndex();
+		
+		TextInputDialog dialog = new TextInputDialog(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex).getCaption());
+		dialog.setTitle("Add/Change Caption");
+		dialog.setHeaderText("What Caption do you want to add?");
+		dialog.setContentText("Caption:");
+
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()){
+		    
+			String caption = (String) result.get();
+			
+			Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex).setCaption(caption);
+			populatePhotosList();
+			photosList.refresh();
+	        obsList=FXCollections.observableArrayList(photosInAlbum);
+		   /*Render in proper UI*/
+		   photosList.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>(){
+				@Override
+				public ListCell<Photo> call(ListView<Photo> p){
+					return new EachPhoto();
+				}
+					
+			});
+		   photosList.setItems(obsList);
+			   
+		   PhotoAlbumManager.serialize(Photos.manager);
+			
+		}
+		return;
+		
 	}
 	
 	
@@ -266,6 +370,20 @@ public class SingleAlbumControl implements LogoutInterface {
 	  * Let's user go back to list of albums page (user homepage)
 	  */
 	public void handleBack(ActionEvent event) throws IOException {
+		
+		Parent parent;
+		
+		FXMLLoader loader= new FXMLLoader(getClass().getResource("/view/UserHomepage.fxml"));
+		parent = (Parent)loader.load();
+		UserHomepageControl ctrl = loader.getController();
+		Scene scene = new Scene(parent);
+					
+		Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();	
+	                
+		ctrl.start(app_stage);
+	             
+	    app_stage.setScene(scene);
+	    app_stage.show();
 		
 	}
 	

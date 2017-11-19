@@ -46,6 +46,7 @@
          <items>
             <MenuItem fx:id="viewPhoto" mnemonicParsing="false" onAction="#handleViewPhoto" text="View Photo" />
             <MenuItem fx:id="deletePhoto" mnemonicParsing="false" onAction="#handleDeletePhoto" text="Delete Photo" />
+            <MenuItem fx:id="captionPhoto" mnemonicParsing="false" onAction="#handleCaptionPhoto" text="Change Photo Caption" />
          </items>
       </MenuButton>
       <ListView fx:id="photosList" layoutX="102.0" layoutY="151.0" prefHeight="242.0" prefWidth="372.0" />

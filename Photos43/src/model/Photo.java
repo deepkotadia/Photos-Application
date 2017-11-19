@@ -84,6 +84,10 @@ public class Photo implements Serializable {
 		return dateAdded;
 	}
 	
+	public void setCaption(String caption) {
+		this.caption = caption;
+	}
+	
 	public String getCaption() {
 		return caption;
 	}

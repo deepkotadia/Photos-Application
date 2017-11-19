@@ -1,9 +1,14 @@
 package control;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -62,9 +67,32 @@ public class SearchControl implements LogoutInterface {
 		   
 		   ButtonType buttonTypeOk = new ButtonType("OK", ButtonData.OK_DONE);
 		   dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
-		   
-		  
+		   	  
 	}
+	
+	
+	/**
+	  * 
+	  * Let's user go back to list of albums page (user homepage)
+	  */
+	public void handleBack(ActionEvent event) throws IOException {
+		
+		Parent parent;
+		
+		FXMLLoader loader= new FXMLLoader(getClass().getResource("/view/UserHomepage.fxml"));
+		parent = (Parent)loader.load();
+		UserHomepageControl ctrl = loader.getController();
+		Scene scene = new Scene(parent);
+					
+		Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();	
+	                
+		ctrl.start(app_stage);
+	             
+	    app_stage.setScene(scene);
+	    app_stage.show();
+		
+	}
+	
 	
 	/** 
 	  * Logs out the current user's session

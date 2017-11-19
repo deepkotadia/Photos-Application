@@ -3,6 +3,7 @@
  */
 package control;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,16 +164,22 @@ public class UserHomepageControl implements LogoutInterface {
 			super.updateItem(album, empty);
 			
 			setText(null);
-			if(album == null)
+			if(album == null || album.getPhotos().isEmpty()) //album is empty, so no cover photo
 			{
-				//Image no_thumb = new Image("/stockphotos/no_thumb.jpg");
-				//imageView.setImage(no_thumb);
+				Image no_thumb = new Image(new File("/Users/deepkotadia/Desktop/Fall 2017/Software Methodology (CS 213)/photoscs213/Photos43/stockphotos/no_thumb.jpg").toURI().toString());
+				imageView.setImage(no_thumb);
 				albumName.setText("");
-				dateRange.setText("");
+				if(album != null) {
+					albumName.setText("Album name: " + album.getAlbumName());
+					dateRange.setText(album.getDateCreated() + "");
+					numberOfPhotos.setText("Number of Photos: " + album.getPhotos().size());
+				}
+
 			}
 			
 			else{
-				//imageView.setImage(album.getAlbumPhoto());
+				Image thumb_img = new Image(new File(album.getPhotos().get(0).getPhotoPath()).toURI().toString());
+				imageView.setImage(thumb_img);
 				albumName.setText("Album name: " + album.getAlbumName());
 				if(album.getPhotos().isEmpty()) {
 					dateRange.setText(album.getDateCreated() + "");
