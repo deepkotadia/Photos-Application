@@ -30,6 +30,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -59,6 +60,8 @@ public class UserHomepageControl implements LogoutInterface {
 	@FXML ListView<Album> albumsList;
 	
 	@FXML Text welcomeText;
+	
+	@FXML AnchorPane root;
 	
 	private ObservableList<Album> obsList;
 	private static List<Album> albumsOfUser = new ArrayList<Album>();
@@ -162,12 +165,13 @@ public class UserHomepageControl implements LogoutInterface {
 			setText(null);
 			if(album == null)
 			{
-				//imageView.setImage(null);
+				//Image no_thumb = new Image("/stockphotos/no_thumb.jpg");
+				//imageView.setImage(no_thumb);
 				albumName.setText("");
 				dateRange.setText("");
 			}
-			//		setGraphic(null);
-			else{//(album != null){
+			
+			else{
 				//imageView.setImage(album.getAlbumPhoto());
 				albumName.setText("Album name: " + album.getAlbumName());
 				if(album.getPhotos().isEmpty()) {
@@ -376,10 +380,10 @@ public class UserHomepageControl implements LogoutInterface {
 		/*Load the selected Album's Page*/
 		FXMLLoader loader= new FXMLLoader(getClass().getResource("/view/SingleAlbum.fxml"));
 		parent = (Parent)loader.load();
-		UserHomepageControl ctrl = loader.getController();
+		SingleAlbumControl ctrl = loader.getController();
 		Scene scene = new Scene(parent);
-					
-		Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();	
+		
+		Stage app_stage = (Stage) root.getScene().getWindow();	
 	                
 		ctrl.start(app_stage);
 	             
