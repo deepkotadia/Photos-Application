@@ -81,15 +81,15 @@ public class SingleAlbumControl implements LogoutInterface {
 	public void start(Stage app_stage) {
 		
 		albumname.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName());
-		numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
+		//numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
 		
 		populatePhotosList();
 		
-		if(!(photosInAlbum.isEmpty())) {
+		/*if(!(photosInAlbum.isEmpty())) {
 			daterange.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getMinDate().toString() + " - " + Photos.manager.getCurrentUser().getcurrentAlbum().getMaxDate().toString());
 			Image img = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(0).getPhotoPath()).toURI().toString());
 			albumimg.setImage(img);
-		}
+		}*/
 			
 		obsList = FXCollections.observableArrayList(photosInAlbum);   
 		
@@ -113,12 +113,25 @@ public class SingleAlbumControl implements LogoutInterface {
 	/**
 	  * Populates the list of Photos for the selected Album
 	  */
-	public static void populatePhotosList(){
+	public void populatePhotosList(){
 		
 		photosInAlbum.clear(); //refresh the list
 		
 		for(int i = 0; i < Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size(); i++) {
 			photosInAlbum.add(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(i));
+		}
+		
+		if(!(photosInAlbum.isEmpty())) {
+			daterange.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getMinDate().toString() + " - " + Photos.manager.getCurrentUser().getcurrentAlbum().getMaxDate().toString());
+			Image img = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(0).getPhotoPath()).toURI().toString());
+			albumimg.setImage(img);
+			numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
+		}
+		else { //no photos in album, so no thumbnail pic available
+			Image no_thumb = new Image(new File("/Users/deepkotadia/Desktop/Fall 2017/Software Methodology (CS 213)/photoscs213/Photos43/stockphotos/no_thumb.jpg").toURI().toString());
+			albumimg.setImage(no_thumb);
+			numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
+			daterange.setText("-");
 		}
 		
 	}
