@@ -3,6 +3,7 @@
  */
 package control;
 
+import java.io.File;
 import java.io.IOException;
 
 import application.Photos;
@@ -16,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -50,6 +52,9 @@ public class SlideshowControl implements LogoutInterface {
 		
 		albumname.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName());
 		numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
+		
+		Image currimg = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().getPhotoPath()).toURI().toString());
+		imgslide.setImage(currimg);
 		
 	}
 	
