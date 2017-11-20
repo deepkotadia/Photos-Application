@@ -57,7 +57,7 @@ public class SearchControl implements LogoutInterface {
 	
 	@FXML ListView<Photo> photosList;
 	
-	@FXML ListView<Tag> listViewOfTags;
+	@FXML ListView<String> listViewOfTags;
 	
 	@FXML TextArea detailBox;
 	
@@ -67,7 +67,9 @@ public class SearchControl implements LogoutInterface {
 	
 	private List<Photo> photosFromSearch = new ArrayList<Photo>();
 	private List<Tag> listOfTags = new ArrayList<Tag>();
+	private List<String> displayTags = new ArrayList<String>();
 	private ObservableList<Photo> obsList;
+	private ObservableList<String> obsList_Tag;
 
 	public void start(Stage app_stage) {
 		
@@ -102,7 +104,7 @@ public class SearchControl implements LogoutInterface {
 				   Alert alert = new Alert(AlertType.ERROR);
 				   alert.setTitle("Error Dialog");
 				   alert.setHeaderText("The date range you provided is not valid!");
-				   alert.setContentText("Please enter the correct range!");
+				   alert.setContentText("Please make sure the start date is before the end date!");
 
 				   Optional<ButtonType> buttonClicked=alert.showAndWait();
 				   if (buttonClicked.get()==ButtonType.OK) {
@@ -120,7 +122,11 @@ public class SearchControl implements LogoutInterface {
 			this.displaySearchedPhotos();
 	}
 	
-	public void handleSearchByTag() {
+	/**
+	 * function handler for searching by tags button
+	 */
+	
+	public void handleSearchByTag(ActionEvent event) {
 		this.photosFromSearch = Photos.manager.getCurrentUser().getPhotosWithTag(listOfTags);
 		this.displaySearchedPhotos();	
 	}
@@ -193,10 +199,42 @@ public class SearchControl implements LogoutInterface {
 		}
 	}
 	
-	public void handleAddTag() {
-		//TODO 1. read the two text boxes into 2 string variables and check that either of them is not empty
-//			   2. create a Tag object and add it to the listOfTags
-//		       3. display the listOfTags
+	/**
+	 * This function is the handler for adding a tag to a list of tags to be searched for 
+	 */
+	
+	public void handleAddTag(ActionEvent event) {
+		if(nameTag.getText().trim().isEmpty() || valueTag.getText().trim().isEmpty()) {
+			 Alert alert = new Alert(AlertType.ERROR);
+			 alert.setTitle("Error Dialog");
+			 alert.setHeaderText("Please enter a tag name and its value!");
+			 alert.setContentText("The name and value cannot be left blank!");
+
+			   Optional<ButtonType> buttonClicked=alert.showAndWait();
+			   if (buttonClicked.get()==ButtonType.OK) {
+				   alert.close();
+			   }
+			   else {
+				   alert.close();
+			   }
+			return;		
+		}
+		
+		Tag addedTag = new Tag(nameTag.getText(), valueTag.getText());
+		
+		listOfTags.add(addedTag);
+		
+		displayTags.clear();
+		
+		for(Tag t : listOfTags) {
+			displayTags.add("Tag Name: " + t.key + "      " + "Tag Value: " + t.value );
+		}
+		
+		obsList_Tag = FXCollections.observableArrayList(displayTags);               
+		listViewOfTags.setItems(obsList_Tag);
+		
+		nameTag.setText("");
+		valueTag.setText("");
 	}
 		
 	/**

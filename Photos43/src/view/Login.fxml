@@ -21,7 +21,7 @@
          </font>
       </Label>
       <Sphere layoutX="53.0" layoutY="277.0" radius="10.0" />
-      <ImageView blendMode="SRC_ATOP" fitHeight="207.0" fitWidth="395.0" layoutX="197.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView blendMode="SRC_ATOP" fitHeight="223.0" fitWidth="283.0" layoutX="189.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../stockphotos/login_cover.jpg" />
          </image>
