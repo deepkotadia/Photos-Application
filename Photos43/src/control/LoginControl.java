@@ -55,7 +55,6 @@ public class LoginControl {
 		
 		String usernamestr = username.getText();
 		Parent parent;
-		//photoAlbumManager = PhotoAlbumManager.deserialize();
 		
 		
 		if(usernamestr.equals(adminUserName)) { //is admin user
@@ -69,20 +68,15 @@ public class LoginControl {
 			ctrl.start(app_stage);
 		             
 		    app_stage.setScene(scene);
+		    
 		    app_stage.show();
 		}
 		
 		else if(photoAlbumManager.login(usernamestr) ) { //user exists, so login
-			//photoAlbumManager.login(usernamestr);
+			
 			User currentUser = photoAlbumManager.getCurrentUser();
 			List<Album> userAlbums = currentUser.getAlbums();
 			
-			/*for(Album album : userAlbums) {
-				String nameOfAlbum = album.getAlbumName();
-				Date dateCreated = album.getDateCreated();
-				int totalPhotos = album.getPhotos().size();
-				//TODO create a box for the album with the name and the date created	
-			}*/
 			
 			FXMLLoader loader= new FXMLLoader(getClass().getResource("/view/UserHomepage.fxml"));
 			parent = (Parent)loader.load();

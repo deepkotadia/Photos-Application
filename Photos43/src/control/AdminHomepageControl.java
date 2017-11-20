@@ -54,6 +54,8 @@ public class AdminHomepageControl implements LogoutInterface {
 		
 		//ulist = PhotoAlbumManager.deserialize();
 		//users = ulist.getusers();
+		App_Stage.setTitle("Admin Homepage");
+		
 		populatenameandusername();
 		
 		obsList = FXCollections.observableArrayList(nameandusername);               
