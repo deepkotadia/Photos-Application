@@ -4,7 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import application.Photos;
 
@@ -40,18 +42,23 @@ public class User implements Serializable {
 		albums.remove(index);
 	}
 	
-	public List<Photo> getPhotosWithTag(String key, String value){
-		List<Photo> photosWithTag = new ArrayList<Photo>();
+	public List<Photo> getPhotosWithTag(List<Tag> tags){
+		Set<Photo> photosWithTag = new HashSet<Photo>();
 		
-		for(Album userAlbum : albums){
-			for(Photo photo : userAlbum.getPhotos()) {
-				if(photo.doesTagExist(key, value)) {
-					photosWithTag.add(photo);
+		List<Photo> listOfPhotosWithTag = new ArrayList<Photo>();
+		
+		for(Tag tag : tags) {
+			for(Album userAlbum : albums){
+				for(Photo photo : userAlbum.getPhotos()) {
+					if(photo.doesTagExist(tag.key, tag.value)) {
+						photosWithTag.add(photo);
+					}
 				}
 			}
 		}
 		
-		return photosWithTag;
+		listOfPhotosWithTag.addAll(photosWithTag);
+		return listOfPhotosWithTag;
 	}
 	
 	/**
@@ -81,7 +88,8 @@ public class User implements Serializable {
 				Calendar calPhotoDate2 = Calendar.getInstance();
 				calPhotoDate2.set(photoYear, photoMonth, photoDay);
 				
-				if(calPhotoDate2.compareTo(calUserStartDate) > 0 && calPhotoDate2.compareTo(calUserEndDate) < 0) {
+				if((calPhotoDate2.compareTo(calUserStartDate) > 0 && calPhotoDate2.compareTo(calUserEndDate) < 0) 
+						|| (calPhotoDate2.equals(calUserStartDate)) || calPhotoDate2.equals(calUserEndDate)) {
 					photosInDateRange.add(photo);
 				}
 			}

@@ -137,6 +137,21 @@ public class SingleAlbumControl implements LogoutInterface {
 		
 	}
 	
+	public void refreshAlbumInfo() {
+		if(!(photosInAlbum.isEmpty())) {
+			daterange.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getMinDate().toString() + " - " + Photos.manager.getCurrentUser().getcurrentAlbum().getMaxDate().toString());
+			Image img = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(0).getPhotoPath()).toURI().toString());
+			albumimg.setImage(img);
+			numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
+		}
+		else { //no photos in album, so no thumbnail pic available
+			Image no_thumb = new Image(new File("/Users/deepkotadia/Desktop/Fall 2017/Software Methodology (CS 213)/photoscs213/Photos43/stockphotos/no_thumb.jpg").toURI().toString());
+			albumimg.setImage(no_thumb);
+			numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
+			daterange.setText("-");
+		}
+	}
+	
 	
 	/**
 	 * This class is overriding ListCell which is a cell in ListView to display all photos inside selected album
@@ -240,11 +255,16 @@ public class SingleAlbumControl implements LogoutInterface {
 		
 		//Get the absolute path of image file
 		filepath = imgfile.getAbsolutePath();
+		Photo newPhoto = new Photo(filepath);
 		
 		//Add photo to the current album
 		Photos.manager.getCurrentUser().getcurrentAlbum().addPhoto(filepath);
 		
-		populatePhotosList();
+		photosInAlbum.add(newPhoto);
+		this.refreshAlbumInfo();
+		
+//		populatePhotosList();
+		
 		photosList.refresh();
 		obsList=FXCollections.observableArrayList(photosInAlbum);
 		   /*Render in proper UI*/
@@ -324,7 +344,7 @@ public class SingleAlbumControl implements LogoutInterface {
 		   Optional<ButtonType> result = alert.showAndWait();
 		   if (result.get() == ButtonType.OK) { // ... user chose OK
 			   
-			   Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().remove(photoindex);
+			   Photos.manager.getCurrentUser().getcurrentAlbum().removePhoto(photoindex);
 			   populatePhotosList();
 			   photosList.refresh();
 			   obsList=FXCollections.observableArrayList(photosInAlbum);
@@ -427,7 +447,7 @@ public class SingleAlbumControl implements LogoutInterface {
 	}
 	
 	
-	/**
+ 	/**
 	  * 
 	  * Logs out the current user's session
 	  */

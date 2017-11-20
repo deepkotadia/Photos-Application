@@ -52,9 +52,8 @@ public class Album implements Serializable {
 		}
 	}
 	
-	public void removePhoto(String photoPath) {
-		Photo photoToRemove = new Photo(photoPath);
-		photos.remove(photoToRemove);
+	public void removePhoto(int photoIndex) {
+		Photo photoToRemove = photos.remove(photoIndex);
 		
 		if(photos.isEmpty()) {
 			maxDate = null;
@@ -131,7 +130,7 @@ public class Album implements Serializable {
 	public List<Photo> getPhotos() {
 		return photos;
 	}
-
+	
 	public Date getMinDate() {
 		return minDate;
 	}

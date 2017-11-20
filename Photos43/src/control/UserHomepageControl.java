@@ -333,7 +333,7 @@ public class UserHomepageControl implements LogoutInterface {
 		   Optional<ButtonType> result = alert.showAndWait();
 		   if (result.get() == ButtonType.OK) { // ... user chose OK
 			   
-			   Photos.manager.getCurrentUser().getAlbums().remove(albumindex);
+			   Photos.manager.getCurrentUser().removeAlbum(albumindex);
 			   populateAlbumList();
 			   albumsList.refresh();
 			   obsList=FXCollections.observableArrayList(albumsOfUser);

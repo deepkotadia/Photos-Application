@@ -32,7 +32,7 @@
          </font>
       </Button>
       <Button fx:id="backBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
-      <DatePicker fx:id="startDate" layoutX="9.0" layoutY="52.0" prefHeight="29.0" prefWidth="131.0" />
-      <DatePicker fx:id="endDate" layoutX="167.0" layoutY="54.0" prefHeight="25.0" prefWidth="150.0" />
+      <DatePicker fx:id="startDate" layoutX="9.0" layoutY="52.0" prefHeight="25.0" prefWidth="150.0" />
+      <DatePicker fx:id="endDate" layoutX="183.0" layoutY="52.0" prefHeight="25.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
