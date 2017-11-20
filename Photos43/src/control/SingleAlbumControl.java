@@ -416,6 +416,239 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	/**
 	  * 
+	  * Let's user move the selected photo from one album to another
+	  */
+	public void handleMovePhoto(ActionEvent event) throws IOException {
+		
+		int photoindex = photosList.getSelectionModel().getSelectedIndex(); 
+		
+		Dialog<String> dialog = new Dialog<>();
+		   dialog.setTitle("Move Photo to Another Album");
+		   dialog.setHeaderText("Type Name of Album you want to Move your Photo to");
+		   dialog.setResizable(true);
+		   
+		   Label albumnameLabel = new Label("Destination Album Name: ");
+		   TextField albumnameTextField = new TextField();
+		   
+		   GridPane grid = new GridPane();
+		   grid.add(albumnameLabel, 1, 1);
+		   grid.add(albumnameTextField, 2, 1);
+		   
+		   dialog.getDialogPane().setContent(grid);
+		   
+		   ButtonType buttonTypeOk = new ButtonType("Move", ButtonData.OK_DONE);
+		   dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+		   
+		   dialog.setResultConverter(new Callback<ButtonType, String>() {
+			   @Override
+			   public String call(ButtonType b) {
+				   if (b == buttonTypeOk) {
+					   
+					   String error = checkFields(albumnameTextField.getText());
+					   
+					   if (error != null) {
+						   Alert alert = new Alert(AlertType.ERROR);
+						   alert.setTitle("Error Dialog");
+						   alert.setHeaderText(error);
+						   alert.setContentText("Please try again");
+
+						   Optional<ButtonType> buttonClicked=alert.showAndWait();
+						   if (buttonClicked.get()==ButtonType.OK) {
+							   alert.close();
+						   }
+						   else {
+							   alert.close();
+						   }
+						   return null;
+					   }
+											   
+					   return albumnameTextField.getText().trim();
+				   }
+				   return null;
+			   }
+			
+		   });
+		   
+		   //wait for response from Move button
+		   Optional<String> result = dialog.showAndWait();
+		   
+		   // if user presses Move, add the selected photo to the new requested album and remove from current album
+		   if (result.isPresent()) {
+			   String newAlbumName = result.get(); //store result
+			   
+			   //get index of album where selected photo needs to be moved
+			   List<Album> albums = Photos.manager.getCurrentUser().getAlbums();
+			   int albumindex = 0;
+			   for(int i = 0; i < albums.size(); i++) {
+				   if(albums.get(i).getAlbumName().equals(newAlbumName)) { //album found!
+					   albumindex = i;
+					   break;
+				   }
+			   }
+			   
+			   //get path of selected photo (to be moved)
+			   String photopath = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex).getPhotoPath();
+			   
+			   //clone the photo in new album
+			   Photos.manager.getCurrentUser().getAlbums().get(albumindex).addPhoto(photopath);
+			   
+			   //remove photo from current album
+			   Photos.manager.getCurrentUser().getcurrentAlbum().removePhoto(photoindex);
+			   
+			   populatePhotosList();
+			   photosList.refresh();
+			   obsList=FXCollections.observableArrayList(photosInAlbum);
+			   /*Render in proper UI*/
+			   photosList.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>(){
+					@Override
+					public ListCell<Photo> call(ListView<Photo> p){
+						return new EachPhoto();
+					}
+					
+				});
+			   photosList.setItems(obsList);
+			   
+			   PhotoAlbumManager.serialize(Photos.manager);
+			   
+			   if(photosInAlbum.size() == 0) {
+					deletePhoto.setVisible(false);
+		       }
+			   else {
+				   int lastalbumindex = photosInAlbum.size();
+				   if(photosInAlbum.size() == 1) { //only one photo remaining in list, so select it
+					   photosList.getSelectionModel().select(0);
+				   }
+				   else if(photoindex == lastalbumindex) { //removed photo was last photo in the list, so select previous photo, previous photo is now last photo
+					   photosList.getSelectionModel().select(lastalbumindex-1);
+				   }
+				   else { //not the last photo, so select next photo
+					   photosList.getSelectionModel().select(photoindex);
+				   }
+			   }
+		   }
+		
+	}
+	
+	
+	
+	/**
+	  * 
+	  * Let's user copy the selected photo into another album
+	  */
+	public void handleCopyPhoto(ActionEvent event) throws IOException {
+		
+		int photoindex = photosList.getSelectionModel().getSelectedIndex(); 
+		
+		Dialog<String> dialog = new Dialog<>();
+		   dialog.setTitle("Copy Photo to Another Album");
+		   dialog.setHeaderText("Type Name of Album you want to Copy your Photo to");
+		   dialog.setResizable(true);
+		   
+		   Label albumnameLabel = new Label("Album Name: ");
+		   TextField albumnameTextField = new TextField();
+		   
+		   GridPane grid = new GridPane();
+		   grid.add(albumnameLabel, 1, 1);
+		   grid.add(albumnameTextField, 2, 1);
+		   
+		   dialog.getDialogPane().setContent(grid);
+		   
+		   ButtonType buttonTypeOk = new ButtonType("Copy", ButtonData.OK_DONE);
+		   dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+		   
+		   dialog.setResultConverter(new Callback<ButtonType, String>() {
+			   @Override
+			   public String call(ButtonType b) {
+				   if (b == buttonTypeOk) {
+					   
+					   String error = checkFields(albumnameTextField.getText());
+					   
+					   if (error != null) {
+						   Alert alert = new Alert(AlertType.ERROR);
+						   alert.setTitle("Error Dialog");
+						   alert.setHeaderText(error);
+						   alert.setContentText("Please try again");
+
+						   Optional<ButtonType> buttonClicked=alert.showAndWait();
+						   if (buttonClicked.get()==ButtonType.OK) {
+							   alert.close();
+						   }
+						   else {
+							   alert.close();
+						   }
+						   return null;
+					   }
+											   
+					   return albumnameTextField.getText().trim();
+				   }
+				   return null;
+			   }
+			
+		   });
+		   
+		   //wait for response from Copy button
+		   Optional<String> result = dialog.showAndWait();
+		   
+		   // if user presses Copy, add the selected photo to the new requested album
+		   if (result.isPresent()) {
+			   String newAlbumName = result.get(); //store result
+			   
+			   //get index of album where selected photo needs to be copied
+			   List<Album> albums = Photos.manager.getCurrentUser().getAlbums();
+			   int albumindex = 0;
+			   for(int i = 0; i < albums.size(); i++) {
+				   if(albums.get(i).getAlbumName().equals(newAlbumName)) { //album found
+					   albumindex = i;
+					   break;
+				   }
+			   }
+			   
+			   //get path of selected photo (to be copied)
+			   String photopath = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex).getPhotoPath();
+			   
+			   //clone the photo in new album
+			   Photos.manager.getCurrentUser().getAlbums().get(albumindex).addPhoto(photopath);
+			   
+			   populatePhotosList();
+			   photosList.refresh();
+			   obsList=FXCollections.observableArrayList(photosInAlbum);
+			   /*Render in proper UI*/
+			   photosList.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>(){
+					@Override
+					public ListCell<Photo> call(ListView<Photo> p){
+						return new EachPhoto();
+					}
+					
+				});
+			   photosList.setItems(obsList);
+			   
+			   PhotoAlbumManager.serialize(Photos.manager);
+		   }
+		
+	}
+		   
+	
+		/**
+		 * 
+		 * Check the fields, return null if no errors found
+		 * @return the error message in string format, null if no errors
+		 */
+		 private String checkFields(String albumname) {
+			   if (albumname.trim().isEmpty())
+				   return "Albumname is a required field.";
+			   
+			   List<Album> albums = Photos.manager.getCurrentUser().getAlbums();
+			   for(int i = 0; i < albums.size(); i++) {
+				   if(albums.get(i).getAlbumName().equals(albumname)) { //album exists
+					   return null;
+				   }
+			   }
+			   return "There is no Album called " + albumname + ". Please enter a valid Album Name.";
+		}
+	
+	
+	/**
+	  * 
 	  * Let's user go back to list of albums page (user homepage)
 	  */
 	public void handleBack(ActionEvent event) throws IOException {

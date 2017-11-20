@@ -66,7 +66,8 @@ public class SearchControl implements LogoutInterface {
 	private ObservableList<Photo> obsList;
 
 	public void start(Stage app_stage) {
-		// TODO 
+		
+		app_stage.setTitle(Photos.manager.getCurrentUser().getName() + " 's Photos Search Page");
 		
 		
 		
