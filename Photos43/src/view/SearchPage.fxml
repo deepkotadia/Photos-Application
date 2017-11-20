@@ -22,7 +22,7 @@
             <Font name="Bookman Old Style Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="createAlbum" layoutX="14.0" layoutY="241.0" mnemonicParsing="false" prefHeight="3.0" prefWidth="112.0" text="Create Album" textFill="#612727">
+      <Button fx:id="createAlbum" layoutX="14.0" layoutY="241.0" mnemonicParsing="false" onAction="#handleCreateAlbum" prefHeight="3.0" prefWidth="112.0" text="Create Album" textFill="#612727">
          <font>
             <Font name="Microsoft YaHei UI" size="12.0" />
          </font>

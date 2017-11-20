@@ -79,6 +79,7 @@ public class SearchControl implements LogoutInterface {
 	
 	/**
 	 * returns a list of photos with the date range to search for
+	 * @param event
 	 */
 	public void handleSearchByDate(ActionEvent event) {
 			LocalDate fromDate = startDate.getValue();
@@ -124,6 +125,7 @@ public class SearchControl implements LogoutInterface {
 	
 	/**
 	 * function handler for searching by tags button
+	 * @param event
 	 */
 	
 	public void handleSearchByTag(ActionEvent event) {
@@ -201,6 +203,7 @@ public class SearchControl implements LogoutInterface {
 	
 	/**
 	 * This function is the handler for adding a tag to a list of tags to be searched for 
+	 * @param event
 	 */
 	
 	public void handleAddTag(ActionEvent event) {
@@ -236,10 +239,19 @@ public class SearchControl implements LogoutInterface {
 		nameTag.setText("");
 		valueTag.setText("");
 	}
+	
+	/**
+	 * handler for the button to create an album from the search results
+	 * @param event
+	 */
+	public void handleCreateAlbum(ActionEvent event) {
+		
+		
+	}
 		
 	/**
-	  * 
 	  * Let's user go back to list of albums page (user homepage)
+	  * @param event
 	  */
 	public void handleBack(ActionEvent event) throws IOException {
 		
