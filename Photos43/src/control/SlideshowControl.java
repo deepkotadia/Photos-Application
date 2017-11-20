@@ -5,6 +5,8 @@ package control;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import application.Photos;
 import javafx.event.ActionEvent;
@@ -21,6 +23,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Album;
+import model.Photo;
 
 /**
  * @author Deep Kotadia
@@ -47,6 +51,12 @@ public class SlideshowControl implements LogoutInterface {
 	@FXML
 	MenuItem AddTag, DeleteTag;
 	
+	private static List<Photo> photosInAlbum = new ArrayList<Photo>();
+	
+	private static Album currAlbum = null;
+	
+	private static int currindex;
+	
 	
 	public void start(Stage app_stage) {
 		
@@ -56,6 +66,13 @@ public class SlideshowControl implements LogoutInterface {
 		
 		Image currimg = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().getPhotoPath()).toURI().toString());
 		imgslide.setImage(currimg);
+		
+		if(SingleAlbumControl.photo_currindex == 0) {
+			prev.setVisible(false);
+		}
+		else if(SingleAlbumControl.photo_currindex == Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size()-1) {
+			next.setVisible(false);
+		}
 		
 	}
 	
@@ -84,6 +101,43 @@ public class SlideshowControl implements LogoutInterface {
 	  */
 	public void handlePrev(ActionEvent event) throws IOException {
 		
+		//int currindex;
+		
+		photosInAlbum.clear();
+		int albumsize = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size();
+		
+		for(int i = 0; i < albumsize; i++) {
+			photosInAlbum.add(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(i));
+		}
+		
+		//photosInAlbum now consist of all the photos in current album
+		//Photo currphoto = Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto();
+		
+		if(currAlbum != Photos.manager.getCurrentUser().getcurrentAlbum()) { //different album, change of album
+			currindex = SingleAlbumControl.photo_currindex;
+			currAlbum = Photos.manager.getCurrentUser().getcurrentAlbum();
+		}
+		//else { //still the same album
+			//go to previous photo
+			currindex--;
+		//}
+		
+		if(currindex == 0) { //at the very first pic, cannot go prev anymore after this
+			prev.setVisible(false);
+			//return;
+		}
+		else if(currindex < albumsize-1) { //not at the last pic, can go next
+			next.setVisible(true);
+			//return;
+		}
+		
+		//set the previous pic as the current photo
+		Photo newPhoto = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex);
+		Photos.manager.getCurrentUser().getcurrentAlbum().setcurrentPhoto(newPhoto);
+		
+		Image newimg = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex).getPhotoPath()).toURI().toString());
+		imgslide.setImage(newimg);
+		
 	}
 	
 	
@@ -92,6 +146,41 @@ public class SlideshowControl implements LogoutInterface {
 	  * Let's user see the next photo in album in enlarged view with its tags
 	  */
 	public void handleNext(ActionEvent event) throws IOException {
+		
+		photosInAlbum.clear();
+		int albumsize = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size();
+		
+		for(int i = 0; i < albumsize; i++) {
+			photosInAlbum.add(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(i));
+		}
+		
+		//photosInAlbum now consist of all the photos in current album
+		//Photo currphoto = Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto();
+		
+		if(currAlbum != Photos.manager.getCurrentUser().getcurrentAlbum()) { //different album, change of album
+			currindex = SingleAlbumControl.photo_currindex;
+			currAlbum = Photos.manager.getCurrentUser().getcurrentAlbum();
+		}
+		//else { //still the same album
+			//go to next photo
+			currindex++;
+		//}
+		
+		if(currindex == albumsize-1) { //at the very last pic, cannot go next anymore after this
+			next.setVisible(false);
+			//return;
+		}
+		else if(currindex > 0) { //not at the first pic, can go prev
+			prev.setVisible(true);
+			//return;
+		}
+		
+		//set the previous pic as the current photo
+		Photo newPhoto = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex);
+		Photos.manager.getCurrentUser().getcurrentAlbum().setcurrentPhoto(newPhoto);
+		
+		Image newimg = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex).getPhotoPath()).toURI().toString());
+		imgslide.setImage(newimg);
 		
 	}
 

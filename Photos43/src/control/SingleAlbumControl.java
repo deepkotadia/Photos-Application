@@ -76,6 +76,7 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	private ObservableList<Photo> obsList;
 	private static List<Photo> photosInAlbum = new ArrayList<Photo>();
+	public static int photo_currindex;
 	
 	
 	public void start(Stage app_stage) {
@@ -301,6 +302,7 @@ public class SingleAlbumControl implements LogoutInterface {
 		
 		//set as current photo since this is about to open in enlarged view
 		Photos.manager.getCurrentUser().getcurrentAlbum().setcurrentPhoto(photo); //this needs to be re set every time prev and next btns are clicked on slideshow page
+		photo_currindex = photoindex;
 		
 		/*Load the Slideshow Page with selected Photo*/
 		FXMLLoader loader= new FXMLLoader(getClass().getResource("/view/Slideshow.fxml"));
