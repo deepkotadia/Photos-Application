@@ -49,7 +49,7 @@ import model.Tag;
  */
 
 public class SearchControl implements LogoutInterface {
-	@FXML Button dateSearch, tagSearch, createAlbum, logoutBtn;
+	@FXML Button dateSearch, tagSearch, addTag, createAlbum, logoutBtn;
 	
 	@FXML DatePicker startDate;
 
@@ -57,7 +57,11 @@ public class SearchControl implements LogoutInterface {
 	
 	@FXML ListView<Photo> photosList;
 	
+	@FXML ListView<Tag> listViewOfTags;
+	
 	@FXML TextArea detailBox;
+	
+	@FXML TextField nameTag, valueTag;
 	
 	@FXML ImageView searchedPhoto;
 	
@@ -68,9 +72,7 @@ public class SearchControl implements LogoutInterface {
 	public void start(Stage app_stage) {
 		
 		app_stage.setTitle(Photos.manager.getCurrentUser().getName() + " 's Photos Search Page");
-		
-		
-		
+				
 	}
 	
 	/**
