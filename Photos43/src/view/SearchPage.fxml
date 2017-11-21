@@ -17,7 +17,7 @@
             <Font name="Bookman Old Style Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="tagSearch" layoutX="390.0" layoutY="206.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="139.0" text="Search by Tag(s)" textFill="#201a68">
+      <Button fx:id="tagSearch" layoutX="390.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleSearchByTag" prefHeight="26.0" prefWidth="139.0" text="Search by Tag(s)" textFill="#201a68">
          <font>
             <Font name="Bookman Old Style Bold" size="14.0" />
          </font>
