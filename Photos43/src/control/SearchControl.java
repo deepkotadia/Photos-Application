@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import application.Photos;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,6 +38,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Album;
 import model.Photo;
+import model.PhotoAlbumManager;
 import model.Tag;
 
 /**
@@ -246,7 +246,76 @@ public class SearchControl implements LogoutInterface {
 	 */
 	public void handleCreateAlbum(ActionEvent event) {
 		
-		
+		if((startDate.getValue() == null || endDate.getValue() == null) && 
+				(nameTag.getText().trim().isEmpty() || valueTag.getText().trim().isEmpty())){
+			 Alert alert = new Alert(AlertType.ERROR);
+			 alert.setTitle("Error Dialog");
+			 alert.setHeaderText("Cannot create album as search is incomplete!");
+			 alert.setContentText("Either provide a date range or a tag-value pair!");
+
+			   Optional<ButtonType> buttonClicked=alert.showAndWait();
+			   if (buttonClicked.get()==ButtonType.OK) {
+				   alert.close();
+			   }
+			   else {
+				   alert.close();
+			   }
+			return;		
+			
+		}
+		   Dialog<Album> dialog = new Dialog<>();
+		   dialog.setTitle("Create a New Album from search results");
+		   dialog.setHeaderText("Name for album created from search results ");
+		   dialog.setResizable(true);
+		   
+		   Label albumnameLabel = new Label("Album Name: ");
+		   TextField albumnameTextField = new TextField();
+		   
+		   GridPane grid = new GridPane();
+		   grid.add(albumnameLabel, 1, 1);
+		   grid.add(albumnameTextField, 2, 1);
+		   
+		   dialog.getDialogPane().setContent(grid);
+		   
+		   ButtonType buttonTypeOk = new ButtonType("Add", ButtonData.OK_DONE);
+		   dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+		   
+		   dialog.setResultConverter(new Callback<ButtonType, Album>() {
+			   @Override
+			   public Album call(ButtonType b) {
+				   if (b == buttonTypeOk) {
+					   if (albumnameTextField.getText().trim().isEmpty()) {
+						   Alert alert = new Alert(AlertType.ERROR);
+						   alert.setTitle("Error Dialog");
+						   alert.setHeaderText("Album name required!");
+						   alert.setContentText("Please try again");
+
+						   Optional<ButtonType> buttonClicked=alert.showAndWait();
+						   if (buttonClicked.get()==ButtonType.OK) {
+							   alert.close();
+						   }
+						   else {
+							   alert.close();
+						   }
+						   return null;
+					   }
+											   
+					   return new Album(albumnameTextField.getText().trim());
+				   }
+				   return null;
+			   }
+			
+		   });
+		   
+		   Optional<Album> result = dialog.showAndWait();
+		   
+		   if (result.isPresent()) {
+			   //TODO date range not coming and then uncomment line 120 in SingleAlbumControl
+			   //Album newAlbumFromSearch = (Album) result.get();
+			   //newAlbumFromSearch.getPhotos().addAll(photosFromSearch);
+			  // Photos.manager.getCurrentUser().getAlbums().add(newAlbumFromSearch); 
+	
+		   }
 	}
 		
 	/**
