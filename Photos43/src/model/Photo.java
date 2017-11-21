@@ -52,6 +52,10 @@ public class Photo implements Serializable {
 		return false;
 	}
 	
+	public List<Tag> getTags(){
+		return tags;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this)

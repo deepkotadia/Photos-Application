@@ -7,24 +7,38 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import application.Photos;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.Album;
 import model.Photo;
+import model.PhotoAlbumManager;
+import model.Tag;
+import model.User;
 
 /**
  * @author Deep Kotadia
@@ -51,6 +65,7 @@ public class SlideshowControl implements LogoutInterface {
 	@FXML
 	MenuItem AddTag, DeleteTag;
 	
+	
 	private static List<Photo> photosInAlbum = new ArrayList<Photo>();
 	
 	private static Album currAlbum = null;
@@ -67,6 +82,8 @@ public class SlideshowControl implements LogoutInterface {
 		Image currimg = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().getPhotoPath()).toURI().toString());
 		imgslide.setImage(currimg);
 		
+		populateTagsTextArea();
+		
 		if(SingleAlbumControl.photo_currindex == 0) {
 			prev.setVisible(false);
 		}
@@ -77,12 +94,109 @@ public class SlideshowControl implements LogoutInterface {
 	}
 	
 	
+	public void populateTagsTextArea() {
+		
+		String tagsdisplay = "";
+		
+		List<Tag> listoftags = Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().getTags();
+		for(int i = 0; i < listoftags.size(); i++) {
+			tagsdisplay = tagsdisplay + "Tag: " + listoftags.get(i).key + "     Value: " + listoftags.get(i).value + "\n";
+		}
+		
+		tags.setText(tagsdisplay);
+	}
+	
+	
 	/**
 	  * 
 	  * Let's user add a tag to photo currently in enlarged view
 	  */
 	public void handleAddTag(ActionEvent event) throws IOException {
 		
+		   Dialog<Tag> dialog = new Dialog<>();
+		   dialog.setTitle("Add a New Tag");
+		   dialog.setHeaderText("Add Tag Key and Value");
+		   dialog.setResizable(true);
+		   
+		   Label keyLabel = new Label("Tag Key: ");
+		   Label valueLabel = new Label("Tag Value: ");
+		   TextField keyTextField = new TextField();
+		   TextField valueTextField = new TextField();
+		   
+		   GridPane grid = new GridPane();
+		   grid.add(keyLabel, 1, 1);
+		   grid.add(keyTextField, 2, 1);
+		   grid.add(valueLabel, 1, 2);
+		   grid.add(valueTextField, 2, 2);
+		   
+		   dialog.getDialogPane().setContent(grid);
+		   
+		   ButtonType buttonTypeOk = new ButtonType("Add", ButtonData.OK_DONE);
+		   dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+		   
+		   dialog.setResultConverter(new Callback<ButtonType, Tag>() {
+			   @Override
+			   public Tag call(ButtonType b) {
+				   if (b == buttonTypeOk) {
+					   
+					   String error = checkFields(keyTextField.getText(),valueTextField.getText());
+					   
+					   if (error != null) {
+						   Alert alert = new Alert(AlertType.ERROR);
+						   alert.setTitle("Error Dialog");
+						   alert.setHeaderText(error);
+						   alert.setContentText("Please try again");
+
+						   Optional<ButtonType> buttonClicked=alert.showAndWait();
+						   if (buttonClicked.get()==ButtonType.OK) {
+							   alert.close();
+						   }
+						   else {
+							   alert.close();
+						   }
+						   return null;
+					   }
+											   
+					   return new Tag(keyTextField.getText().trim(),valueTextField.getText().trim());
+				   }
+				   return null;
+			   }
+			
+		   });
+		   
+		   //wait for response from add button
+		   Optional<Tag> result = dialog.showAndWait();
+		   
+		   // if user presses Add, add the user to the overall list
+		   if (result.isPresent()) {
+			   Tag newtag = (Tag) result.get(); //store result
+			   
+			   Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().addTag(newtag.key, newtag.value);
+			   populateTagsTextArea();
+			   //listView.refresh();
+			   //obsList=FXCollections.observableArrayList(nameandusername);
+			   //listView.setItems(obsList);
+			   PhotoAlbumManager.serialize(Photos.manager);	   
+		   }
+		
+	}
+	
+	
+	/**
+	    * 
+	    * Check the fields, return null if no errors found
+	    * @return the error message in string format, null if no errors
+	    */
+	   private String checkFields(String key, String value) {
+		   if (key.trim().isEmpty())
+			   return "Tag is a required field.";
+		   else if (value.trim().isEmpty())
+			   return "Value is a required field.";
+		   
+		   if (Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().doesTagExist(key, value))
+			   return "This tag and value combination already exists for this photo, please try another combination.";
+		   else	   
+		   return null;
 	}
 	
 	
@@ -135,6 +249,8 @@ public class SlideshowControl implements LogoutInterface {
 		Photo newPhoto = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex);
 		Photos.manager.getCurrentUser().getcurrentAlbum().setcurrentPhoto(newPhoto);
 		
+		populateTagsTextArea();
+		
 		Image newimg = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex).getPhotoPath()).toURI().toString());
 		imgslide.setImage(newimg);
 		
@@ -175,9 +291,11 @@ public class SlideshowControl implements LogoutInterface {
 			//return;
 		}
 		
-		//set the previous pic as the current photo
+		//set the next pic as the current photo
 		Photo newPhoto = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex);
 		Photos.manager.getCurrentUser().getcurrentAlbum().setcurrentPhoto(newPhoto);
+		
+		populateTagsTextArea();
 		
 		Image newimg = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex).getPhotoPath()).toURI().toString());
 		imgslide.setImage(newimg);
