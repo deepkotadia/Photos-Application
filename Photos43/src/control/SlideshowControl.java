@@ -139,7 +139,7 @@ public class SlideshowControl implements LogoutInterface {
 			   public Tag call(ButtonType b) {
 				   if (b == buttonTypeOk) {
 					   
-					   String error = checkFields(keyTextField.getText(),valueTextField.getText());
+					   String error = checkFieldsforAdd(keyTextField.getText(),valueTextField.getText());
 					   
 					   if (error != null) {
 						   Alert alert = new Alert(AlertType.ERROR);
@@ -187,7 +187,7 @@ public class SlideshowControl implements LogoutInterface {
 	    * Check the fields, return null if no errors found
 	    * @return the error message in string format, null if no errors
 	    */
-	   private String checkFields(String key, String value) {
+	   private String checkFieldsforAdd(String key, String value) {
 		   if (key.trim().isEmpty())
 			   return "Tag is a required field.";
 		   else if (value.trim().isEmpty())
@@ -206,6 +206,90 @@ public class SlideshowControl implements LogoutInterface {
 	  */
 	public void handleDeleteTag(ActionEvent event) throws IOException {
 		
+		   Dialog<Tag> dialog = new Dialog<>();
+		   dialog.setTitle("Delete an Existing Tag for this Photo");
+		   dialog.setHeaderText("Enter Tag Key and Value to Delete");
+		   dialog.setResizable(true);
+		   
+		   Label keyLabel = new Label("Tag Key: ");
+		   Label valueLabel = new Label("Tag Value: ");
+		   TextField keyTextField = new TextField();
+		   TextField valueTextField = new TextField();
+		   
+		   GridPane grid = new GridPane();
+		   grid.add(keyLabel, 1, 1);
+		   grid.add(keyTextField, 2, 1);
+		   grid.add(valueLabel, 1, 2);
+		   grid.add(valueTextField, 2, 2);
+		   
+		   dialog.getDialogPane().setContent(grid);
+		   
+		   ButtonType buttonTypeOk = new ButtonType("Delete", ButtonData.OK_DONE);
+		   dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+		   
+		   dialog.setResultConverter(new Callback<ButtonType, Tag>() {
+			   @Override
+			   public Tag call(ButtonType b) {
+				   if (b == buttonTypeOk) {
+					   
+					   String error = checkFieldsforDelete(keyTextField.getText(),valueTextField.getText());
+					   
+					   if (error != null) {
+						   Alert alert = new Alert(AlertType.ERROR);
+						   alert.setTitle("Error Dialog");
+						   alert.setHeaderText(error);
+						   alert.setContentText("Please try again");
+
+						   Optional<ButtonType> buttonClicked=alert.showAndWait();
+						   if (buttonClicked.get()==ButtonType.OK) {
+							   alert.close();
+						   }
+						   else {
+							   alert.close();
+						   }
+						   return null;
+					   }
+											   
+					   return new Tag(keyTextField.getText().trim(),valueTextField.getText().trim());
+				   }
+				   return null;
+			   }
+			
+		   });
+		   
+		   //wait for response from add button
+		   Optional<Tag> result = dialog.showAndWait();
+		   
+		   // if user presses Add, add the user to the overall list
+		   if (result.isPresent()) {
+			   Tag newtag = (Tag) result.get(); //store result
+			   
+			   Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().removeTag(newtag.key, newtag.value);
+			   populateTagsTextArea();
+			   //listView.refresh();
+			   //obsList=FXCollections.observableArrayList(nameandusername);
+			   //listView.setItems(obsList);
+			   PhotoAlbumManager.serialize(Photos.manager);   
+		   }
+		
+	}
+	
+	
+	/**
+	    * 
+	    * Check the fields, return null if no errors found
+	    * @return the error message in string format, null if no errors
+	    */
+	   private String checkFieldsforDelete(String key, String value) {
+		   if (key.trim().isEmpty())
+			   return "Tag is a required field.";
+		   else if (value.trim().isEmpty())
+			   return "Value is a required field.";
+		   
+		   if(!(Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().doesTagExist(key, value)))
+			   return "This tag and value combination doesn't exist for this photo, please try another combination that exists.";
+		   else
+		   return null;
 	}
 	
 	
