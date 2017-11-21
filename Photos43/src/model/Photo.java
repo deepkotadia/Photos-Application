@@ -16,7 +16,7 @@ public class Photo implements Serializable {
 	private String photoPath;
 	private String caption;
 	private Date dateAdded;
-	private HashMap<String, String> tagMap;
+	private List<Tag> tags;
 	
 	/**
 	 * 
@@ -26,19 +26,30 @@ public class Photo implements Serializable {
 		this.caption = "";
 		File photoFile = new File(photoPath);
 		this.dateAdded = new Date(photoFile.lastModified());
-		this.tagMap = new HashMap<String, String>();
+		this.tags = new ArrayList<Tag>();
 	}
 	
 	public void addTag(String key, String value) {
-		tagMap.put(key, value);
+		tags.add(new Tag(key, value));
 	}
 	
 	public boolean removeTag(String key, String value) {
-		return tagMap.remove(key, value);
+		for(int i = 0; i < tags.size(); i++) {
+			if(tags.get(i).key.equals(key) && tags.get(i).value.equals(value)) {
+				tags.remove(i);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public boolean doesTagExist(String key, String value) {
-		return tagMap.containsKey(key) && !(tagMap.get(key) == null);	
+		for(int i = 0; i < tags.size(); i++) {
+			if(tags.get(i).key.equals(key) && tags.get(i).value.equals(value)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override
