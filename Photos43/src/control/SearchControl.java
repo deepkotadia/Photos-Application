@@ -129,6 +129,22 @@ public class SearchControl implements LogoutInterface {
 	 */
 	
 	public void handleSearchByTag(ActionEvent event) {
+		if(listOfTags.isEmpty()) {
+			 Alert alert = new Alert(AlertType.ERROR);
+			 alert.setTitle("Error Dialog");
+			 alert.setHeaderText("Please add a tag to the list before you search for it!");
+			 alert.setContentText("List of tags is empty!");
+
+			   Optional<ButtonType> buttonClicked=alert.showAndWait();
+			   if (buttonClicked.get()==ButtonType.OK) {
+				   alert.close();
+			   }
+			   else {
+				   alert.close();
+			   }
+			return;		
+		}
+		
 		this.photosFromSearch = Photos.manager.getCurrentUser().getPhotosWithTag(listOfTags);
 		this.displaySearchedPhotos();	
 	}
@@ -246,11 +262,10 @@ public class SearchControl implements LogoutInterface {
 	 */
 	public void handleCreateAlbum(ActionEvent event) {
 		
-		if((startDate.getValue() == null || endDate.getValue() == null) && 
-				(nameTag.getText().trim().isEmpty() || valueTag.getText().trim().isEmpty())){
+		if(photosFromSearch.isEmpty()){
 			 Alert alert = new Alert(AlertType.ERROR);
 			 alert.setTitle("Error Dialog");
-			 alert.setHeaderText("Cannot create album as search is incomplete!");
+			 alert.setHeaderText("Cannot create album! Searched photos is empty!");
 			 alert.setContentText("Either provide a date range or a tag-value pair!");
 
 			   Optional<ButtonType> buttonClicked=alert.showAndWait();
@@ -263,7 +278,7 @@ public class SearchControl implements LogoutInterface {
 			return;		
 			
 		}
-		   Dialog<Album> dialog = new Dialog<>();
+		   Dialog<String> dialog = new Dialog<>();
 		   dialog.setTitle("Create a New Album from search results");
 		   dialog.setHeaderText("Name for album created from search results ");
 		   dialog.setResizable(true);
@@ -280,9 +295,9 @@ public class SearchControl implements LogoutInterface {
 		   ButtonType buttonTypeOk = new ButtonType("Add", ButtonData.OK_DONE);
 		   dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
 		   
-		   dialog.setResultConverter(new Callback<ButtonType, Album>() {
+		   dialog.setResultConverter(new Callback<ButtonType, String>() {
 			   @Override
-			   public Album call(ButtonType b) {
+			   public String call(ButtonType b) {
 				   if (b == buttonTypeOk) {
 					   if (albumnameTextField.getText().trim().isEmpty()) {
 						   Alert alert = new Alert(AlertType.ERROR);
@@ -300,21 +315,19 @@ public class SearchControl implements LogoutInterface {
 						   return null;
 					   }
 											   
-					   return new Album(albumnameTextField.getText().trim());
+					   return albumnameTextField.getText().trim();
 				   }
 				   return null;
 			   }
 			
 		   });
 		   
-		   Optional<Album> result = dialog.showAndWait();
+		   Optional<String> result = dialog.showAndWait();
 		   
 		   if (result.isPresent()) {
-			   //TODO date range not coming and then uncomment line 120 in SingleAlbumControl
-			   //Album newAlbumFromSearch = (Album) result.get();
-			   //newAlbumFromSearch.getPhotos().addAll(photosFromSearch);
-			  // Photos.manager.getCurrentUser().getAlbums().add(newAlbumFromSearch); 
-	
+			   Album albumFromSearch = new Album(result.get());
+			   Photos.manager.getCurrentUser().addAlbum(albumFromSearch);
+			   albumFromSearch.addPhotos(photosFromSearch);  
 		   }
 	}
 		

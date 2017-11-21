@@ -38,6 +38,10 @@ public class User implements Serializable {
 		albums.add(newAlbum);		
 	}
 	
+	public void addAlbum(Album album) {
+		albums.add(album);
+	}
+	
 	public void removeAlbum(int index) {
 		albums.remove(index);
 	}

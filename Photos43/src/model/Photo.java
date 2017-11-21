@@ -35,7 +35,7 @@ public class Photo implements Serializable {
 	
 	public boolean removeTag(String key, String value) {
 		for(int i = 0; i < tags.size(); i++) {
-			if(tags.get(i).key.equals(key) && tags.get(i).value.equals(value)) {
+			if(tags.get(i).key.toLowerCase().equals(key.toLowerCase()) && tags.get(i).value.toLowerCase().equals(value.toLowerCase())) {
 				tags.remove(i);
 				return true;
 			}
@@ -45,7 +45,7 @@ public class Photo implements Serializable {
 	
 	public boolean doesTagExist(String key, String value) {
 		for(int i = 0; i < tags.size(); i++) {
-			if(tags.get(i).key.equals(key) && tags.get(i).value.equals(value)) {
+			if(tags.get(i).key.toLowerCase().equals(key.toLowerCase()) && tags.get(i).value.toLowerCase().equals(value.toLowerCase())) {
 				return true;
 			}
 		}

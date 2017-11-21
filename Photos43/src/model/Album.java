@@ -52,6 +52,12 @@ public class Album implements Serializable {
 		}
 	}
 	
+	public void addPhotos(List<Photo> photosForNewAlbum) {
+		photos.addAll(photosForNewAlbum);
+		this.refreshMinDate();
+		this.refreshMaxDate();
+	}
+	
 	public void removePhoto(int photoIndex) {
 		Photo photoToRemove = photos.remove(photoIndex);
 		

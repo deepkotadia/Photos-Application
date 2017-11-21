@@ -117,7 +117,7 @@ public class SingleAlbumControl implements LogoutInterface {
 		}
 		
 		if(!(photosInAlbum.isEmpty())) {
-			//daterange.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getMinDate().toString() + " - " + Photos.manager.getCurrentUser().getcurrentAlbum().getMaxDate().toString());
+			daterange.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getMinDate().toString() + " - " + Photos.manager.getCurrentUser().getcurrentAlbum().getMaxDate().toString());
 			Image img = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(0).getPhotoPath()).toURI().toString());
 			albumimg.setImage(img);
 			numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
