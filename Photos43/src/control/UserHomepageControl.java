@@ -323,6 +323,23 @@ public class UserHomepageControl implements LogoutInterface {
 	  */
 	public void handleDeleteAlbum(ActionEvent event) throws IOException {
 		
+		if(albumsOfUser.isEmpty()) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error Dialog");
+			alert.setHeaderText("You have no Albums yet.");
+		    alert.setContentText("Please Create an Album first");
+
+	    	    Optional<ButtonType> buttonClicked=alert.showAndWait();
+			   if (buttonClicked.get()==ButtonType.OK) {
+				   alert.close();
+			   }
+			   else {
+				   alert.close();
+			   }
+			return; //function ended in error state
+		}
+		
 		int albumindex = albumsList.getSelectionModel().getSelectedIndex();
 		   
 		   Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -379,6 +396,23 @@ public class UserHomepageControl implements LogoutInterface {
 	  */
 	public void handleViewAlbum(ActionEvent event) throws IOException {
 		
+		if(albumsOfUser.isEmpty()) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error Dialog");
+			alert.setHeaderText("You have no Albums yet.");
+		    alert.setContentText("Please Create an Album first");
+
+	    	    Optional<ButtonType> buttonClicked=alert.showAndWait();
+			   if (buttonClicked.get()==ButtonType.OK) {
+				   alert.close();
+			   }
+			   else {
+				   alert.close();
+			   }
+			return; //function ended in error state
+		}
+		
 		Parent parent;
 		
 		//User currentUser = Photos.manager.getCurrentUser();
@@ -410,6 +444,23 @@ public class UserHomepageControl implements LogoutInterface {
 	  * Allows User to Rename a selected Album
 	  */
 	public void handleRenameAlbum(ActionEvent event) throws IOException {
+		
+		if(albumsOfUser.isEmpty()) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error Dialog");
+			alert.setHeaderText("You have no Albums yet.");
+		    alert.setContentText("Please Create an Album first");
+
+	    	    Optional<ButtonType> buttonClicked=alert.showAndWait();
+			   if (buttonClicked.get()==ButtonType.OK) {
+				   alert.close();
+			   }
+			   else {
+				   alert.close();
+			   }
+			return; //function ended in error state
+		}
 		
 		addorrename = 1;
 		

@@ -294,6 +294,23 @@ public class SingleAlbumControl implements LogoutInterface {
 	  */
 	public void handleViewPhoto(ActionEvent event) throws IOException {
 		
+		if(photosInAlbum.isEmpty()) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error Dialog");
+			alert.setHeaderText("Album is currently empty.");
+		    alert.setContentText("Please add a photo first");
+
+	    	    Optional<ButtonType> buttonClicked=alert.showAndWait();
+			   if (buttonClicked.get()==ButtonType.OK) {
+				   alert.close();
+			   }
+			   else {
+				   alert.close();
+			   }
+			return; //function ended in error state
+		}
+		
 		Parent parent;
 		
 		int photoindex = photosList.getSelectionModel().getSelectedIndex();    
@@ -325,6 +342,23 @@ public class SingleAlbumControl implements LogoutInterface {
 	  * Allows user to delete a selected photo from currently open Album
 	  */
 	public void handleDeletePhoto(ActionEvent event) throws IOException {
+		
+		if(photosInAlbum.isEmpty()) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error Dialog");
+			alert.setHeaderText("Album is currently empty.");
+		    alert.setContentText("Please add a photo first");
+
+	    	    Optional<ButtonType> buttonClicked=alert.showAndWait();
+			   if (buttonClicked.get()==ButtonType.OK) {
+				   alert.close();
+			   }
+			   else {
+				   alert.close();
+			   }
+			return; //function ended in error state
+		}
 		
 		int photoindex = photosList.getSelectionModel().getSelectedIndex();
 		   
@@ -382,6 +416,23 @@ public class SingleAlbumControl implements LogoutInterface {
 	  */
 	public void handleCaptionPhoto(ActionEvent event) throws IOException {
 		
+		if(photosInAlbum.isEmpty()) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error Dialog");
+			alert.setHeaderText("Album is currently empty.");
+		    alert.setContentText("Please add a photo first");
+
+	    	    Optional<ButtonType> buttonClicked=alert.showAndWait();
+			   if (buttonClicked.get()==ButtonType.OK) {
+				   alert.close();
+			   }
+			   else {
+				   alert.close();
+			   }
+			return; //function ended in error state
+		}
+		
 		int photoindex = photosList.getSelectionModel().getSelectedIndex();
 		
 		TextInputDialog dialog = new TextInputDialog(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex).getCaption());
@@ -421,6 +472,23 @@ public class SingleAlbumControl implements LogoutInterface {
 	  * Let's user move the selected photo from one album to another
 	  */
 	public void handleMovePhoto(ActionEvent event) throws IOException {
+		
+		if(photosInAlbum.isEmpty()) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error Dialog");
+			alert.setHeaderText("Album is currently empty.");
+		    alert.setContentText("Please add a photo first");
+
+	    	    Optional<ButtonType> buttonClicked=alert.showAndWait();
+			   if (buttonClicked.get()==ButtonType.OK) {
+				   alert.close();
+			   }
+			   else {
+				   alert.close();
+			   }
+			return; //function ended in error state
+		}
 		
 		int photoindex = photosList.getSelectionModel().getSelectedIndex(); 
 		
@@ -538,6 +606,23 @@ public class SingleAlbumControl implements LogoutInterface {
 	  * Let's user copy the selected photo into another album
 	  */
 	public void handleCopyPhoto(ActionEvent event) throws IOException {
+		
+		if(photosInAlbum.isEmpty()) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error Dialog");
+			alert.setHeaderText("Album is currently empty.");
+		    alert.setContentText("Please add a photo first");
+
+	    	    Optional<ButtonType> buttonClicked=alert.showAndWait();
+			   if (buttonClicked.get()==ButtonType.OK) {
+				   alert.close();
+			   }
+			   else {
+				   alert.close();
+			   }
+			return; //function ended in error state
+		}
 		
 		int photoindex = photosList.getSelectionModel().getSelectedIndex(); 
 		
