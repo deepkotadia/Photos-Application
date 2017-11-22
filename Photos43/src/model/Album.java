@@ -7,15 +7,13 @@ import java.util.List;
 
 
 /**
+ * The Album class
  * @author Deep Kotadia
  * @author Chinmoyi Bhushan
  *
  */
 public class Album implements Serializable {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1501113523008844050L;
 	private String albumName;
 	private Date dateCreated;
@@ -24,7 +22,9 @@ public class Album implements Serializable {
 	private Photo currentPhoto;
 
 	/**
-	 * 
+	 * constructor for Album
+	 * @param albumName   name of the album 
+	 * @return 
 	 */
 	public Album(String albumName) {
 		this.albumName = albumName;
@@ -34,6 +34,10 @@ public class Album implements Serializable {
 		photos = new ArrayList<Photo>();
 	}
 	
+	/**
+	 * to add a photo to an album 
+	 * @param photoPath  file path of the photo 
+	 */
 	public void addPhoto(String photoPath) {
 		Photo newPhoto = new Photo(photoPath);
 		photos.add(newPhoto);
@@ -52,6 +56,13 @@ public class Album implements Serializable {
 		}
 	}
 	
+	/**
+	 * to copy a photo from an album
+	 * 
+	 * @param photoPath  filepath
+	 * @param caption  caption of photo
+	 * @param tags   list of tags for that photo
+	 */
 	public void copyPhoto(String photoPath, String caption, List<Tag> tags) {
 		Photo newPhoto = new Photo(photoPath, caption, tags);
 		photos.add(newPhoto);
@@ -70,12 +81,20 @@ public class Album implements Serializable {
 		}
 	}
 	
+	/**
+	 * to add a list of photos 
+	 * @param photosForNewAlbum   list of photos to be added to the album
+	 */
 	public void addPhotos(List<Photo> photosForNewAlbum) {
 		photos.addAll(photosForNewAlbum);
 		this.refreshMinDate();
 		this.refreshMaxDate();
 	}
 	
+	/**
+	 * to remove a photo from a list of photos at a given index 
+	 * @param photoIndex        index of the photo to remove 
+	 */
 	public void removePhoto(int photoIndex) {
 		Photo photoToRemove = photos.remove(photoIndex);
 		

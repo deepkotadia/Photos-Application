@@ -360,6 +360,7 @@ public class SearchControl implements LogoutInterface {
 	
 	/** 
 	  * Logs out the current user's session
+	  * @param event 
 	  */
 	public void handleLogout(ActionEvent event) {
 		try {

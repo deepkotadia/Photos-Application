@@ -11,6 +11,7 @@ import java.util.Set;
 import application.Photos;
 
 /**
+ * The user class 
  * @author Deep Kotadia
  * @author Chinmoyi Bhushan
  *
@@ -24,7 +25,12 @@ public class User implements Serializable {
 	private Album currentAlbum;
 
 	/**
+	 * constructor for the user class 
+	 * @param username     user name 
+	 * @param name    fullname
+	 * @param isAdmin  check for admin
 	 * 
+	 * @return  
 	 */
 	public User(String username, String name, boolean isAdmin) {
 		this.username = username;
@@ -32,20 +38,36 @@ public class User implements Serializable {
 		this.isAdmin = isAdmin;
 		albums = new ArrayList<Album>();		
 	}
-	
+	/**
+	 * function to add an album
+	 * @param albumName   name of album
+	 */
 	public void addAlbum(String albumName) {
 		Album newAlbum = new Album(albumName);
 		albums.add(newAlbum);		
 	}
 	
+	/**
+	 * function to add an album by passing an album object
+	 * @param album   Album object 
+	 */
 	public void addAlbum(Album album) {
 		albums.add(album);
 	}
 	
+	/**
+	 * remove an album from a user's list
+	 * @param index    index of album to be removed 
+	 */
 	public void removeAlbum(int index) {
 		albums.remove(index);
 	}
 	
+	/**
+	 * function to retrieve photos that contain the tag(s) the user searches for 
+	 * @param tags     list of tags for that photo 
+	 * @return List
+	 */
 	public List<Photo> getPhotosWithTag(List<Tag> tags){
 		Set<Photo> photosWithTag = new HashSet<Photo>();
 		
@@ -66,9 +88,15 @@ public class User implements Serializable {
 	}
 	
 	/**
-	 * Dates are inclusive
-	 * @param startDate
-	 * @param endDate
+	 * function to retrieve photos that are in the date range(Dates are inclusive) the user searches for 
+	 * @param startYear         year of start
+	 * @param startMonth        month of start date
+	 * @param startDay          day of start date
+	 * @param endYear           year of end date
+	 * @param endMonth          month of end date
+	 * @param endDay            day of the end date 
+	 * 
+	 * @return List
 	 */
 	public List<Photo> getPhotosInDateRange(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay){
 		Calendar calUserStartDate = Calendar.getInstance();
@@ -121,27 +149,50 @@ public class User implements Serializable {
 		int result = 11;
 		return 17 * result + this.getUsername().hashCode();
 	}
-
+/**
+ * getter for username of the user
+ * @return String 
+ */
 	public String getUsername() {
 		return username;
 	}
+	
+	/**
+	 * getter for name of the user 
+	 * @return String
+	 */
 
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * setter for setting the name of the user
+	 * @param name    setting name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	/**
+	 * 
+	 * @return Album
+	 */
 	public Album getcurrentAlbum() {
 		return currentAlbum;
 	}
 	
+	/**
+	 * setter for the current album of the user
+	 * @param currentAlbum       setting current album 
+	 */
 	public void setcurrentAlbum(Album currentAlbum) {
 		this.currentAlbum = currentAlbum;
 	}
 	
+	/**
+	 * getter for a list of albums of the user 
+	 * @return List
+	 */
 	public List<Album> getAlbums(){
 		return albums;
 	}

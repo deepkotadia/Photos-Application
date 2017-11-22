@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * Photo class 
  * @author Deep Kotadia
  * @author Chinmoyi Bhushan
  *
@@ -19,7 +20,10 @@ public class Photo implements Serializable {
 	private List<Tag> tags;
 	
 	/**
+	 * constructor for Photo class
+	 * @param photoPath  filepath for photo 
 	 * 
+	 * @return 
 	 */
 	public Photo(String photoPath) {
 		this.photoPath = photoPath;
@@ -29,6 +33,15 @@ public class Photo implements Serializable {
 		this.tags = new ArrayList<Tag>();
 	}
 	
+	/**
+	 * another constructor for Photo class
+	 * 
+	 * @param photoPath   filepath 
+	 * @param caption   caption of photo
+	 * @param tags   list of tags for photo 
+	 * 
+	 * @return 
+	 */
 	public Photo(String photoPath, String caption, List<Tag> tags) {
 		this.photoPath = photoPath;
 		this.caption = caption;
@@ -38,10 +51,21 @@ public class Photo implements Serializable {
 		this.tags.addAll(tags);
 	}
 	
+	/**
+	 * function to add a tag for the user 
+	 * @param key   tag name 
+	 * @param value   tag value 
+	 */
 	public void addTag(String key, String value) {
 		tags.add(new Tag(key, value));
 	}
 	
+	/**
+	 * function to remove a tag specified by the user for this photo 
+	 * @param key   tagname
+	 * @param value  tagvalue 
+	 * @return 
+	 */
 	public boolean removeTag(String key, String value) {
 		for(int i = 0; i < tags.size(); i++) {
 			if(tags.get(i).key.toLowerCase().equals(key.toLowerCase()) && tags.get(i).value.toLowerCase().equals(value.toLowerCase())) {
@@ -52,6 +76,14 @@ public class Photo implements Serializable {
 		return false;
 	}
 	
+	/**
+	 * check for if the tag exists for this photo or not 
+	 * 
+	 * @param key   tagname
+	 * @param value  tagvalue 
+	 * 
+	 * @return true if exists else false 
+	 */
 	public boolean doesTagExist(String key, String value) {
 		for(int i = 0; i < tags.size(); i++) {
 			if(tags.get(i).key.toLowerCase().equals(key.toLowerCase()) && tags.get(i).value.toLowerCase().equals(value.toLowerCase())) {
@@ -60,6 +92,11 @@ public class Photo implements Serializable {
 		}
 		return false;
 	}
+	
+	/**
+	 * returns a list of tags
+	 * @return List
+	 */
 	
 	public List<Tag> getTags(){
 		return tags;

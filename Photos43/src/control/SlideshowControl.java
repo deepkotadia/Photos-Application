@@ -1,6 +1,3 @@
-/**
- * 
- */
 package control;
 
 import java.io.File;
@@ -41,6 +38,7 @@ import model.Tag;
 import model.User;
 
 /**
+ * Controller class for slideshow component of Gui 
  * @author Deep Kotadia
  * @author Chinmoyi Chushan
  *
@@ -87,7 +85,9 @@ public class SlideshowControl implements LogoutInterface {
 		
 	}
 	
-	
+	/**
+	 * for displaying tags below a photo in view 
+	 */
 	public void populateTagsTextArea() {
 		
 		String tagsdisplay = "";
@@ -102,8 +102,8 @@ public class SlideshowControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Let's user add a tag to photo currently in enlarged view
+	  * @param event 
 	  */
 	public void handleAddTag(ActionEvent event) throws IOException {
 		
@@ -174,9 +174,10 @@ public class SlideshowControl implements LogoutInterface {
 	
 	
 	/**
-	    * 
 	    * Check the fields, return null if no errors found
-	    * @return the error message in string format, null if no errors
+	    * @param key
+	    * @param value 
+	    * @return String  the error message in string format, null if no errors
 	    */
 	   private String checkFieldsforAdd(String key, String value) {
 		   if (key.trim().isEmpty())
@@ -192,8 +193,8 @@ public class SlideshowControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Let's user delete a tag associated with photo currently in enlarged view
+	  * @param event 
 	  */
 	public void handleDeleteTag(ActionEvent event) throws IOException {
 		
@@ -282,8 +283,8 @@ public class SlideshowControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Let's user see the previous photo in album in enlarged view with its tags
+	  * @param event 
 	  */
 	public void handlePrev(ActionEvent event) throws IOException {
 		
@@ -325,8 +326,8 @@ public class SlideshowControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Let's user see the next photo in album in enlarged view with its tags
+	  * @param event 
 	  */
 	public void handleNext(ActionEvent event) throws IOException {
 		
@@ -367,8 +368,8 @@ public class SlideshowControl implements LogoutInterface {
 
 	
 	/**
-	  * 
 	  * Let's user go back to the Album's page (showing list of Photos inside album)
+	  * @param event 
 	  */
 	public void handleBack(ActionEvent event) throws IOException {
 		
@@ -390,8 +391,8 @@ public class SlideshowControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Logs out the current user's session
+	  * @param event 
 	  */
 	public void handleLogout(ActionEvent event) {
 		try {

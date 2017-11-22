@@ -1,6 +1,3 @@
-/**
- * 
- */
 package control;
 
 import java.io.File;
@@ -70,6 +67,10 @@ public class UserHomepageControl implements LogoutInterface {
 	
 	int addorrename = -1; //0 if call from add, 1 if call from rename
 	
+	/**
+	 * start function
+	 * @param app_stage
+	 */
 	public void start(Stage app_stage) {
 		
 		app_stage.setTitle(Photos.manager.getCurrentUser().getName() + "'s Collection Homepage");
@@ -107,13 +108,6 @@ public class UserHomepageControl implements LogoutInterface {
 	}
 	
 	
-	/**
-	 * This class is overriding ListCell which is a cell in ListView to display information about each album
-	 * 
-	 * @author Chinmoyi Bhushan
-	 * @author Deep Kotadia
-	 *
-	 */
 	private class EachAlbum extends ListCell<Album>{
 		AnchorPane anchor = new AnchorPane();
 		StackPane stackpane = new StackPane();
@@ -206,8 +200,8 @@ public class UserHomepageControl implements LogoutInterface {
 
 
 	/**
-	  * 
 	  * Prompts User to add new Album, adds it to the main arraylist in PhotoAlbumManager
+	  * @param event 
 	  */
 	public void handleAddAlbum(ActionEvent event) throws IOException {
 		
@@ -302,9 +296,8 @@ public class UserHomepageControl implements LogoutInterface {
 	
 	
 	  /**
-	    * 
 	    * Check the fields, return null if no errors found
-	    * @return the error message in string format, null if no errors
+	    * @return String the error message in string format, null if no errors
 	    */
 	   private String checkFields(String albumname) {
 		   if (albumname.trim().isEmpty())
@@ -323,9 +316,9 @@ public class UserHomepageControl implements LogoutInterface {
 	   
 	
 	/**
-	  * 
-	  * Delete selected user from list
-	  * @throws IOException 
+	  * (handler) Delete selected user from list
+	  * @throws IOException
+	  * @param event  
 	  */
 	public void handleDeleteAlbum(ActionEvent event) throws IOException {
 		
@@ -397,8 +390,9 @@ public class UserHomepageControl implements LogoutInterface {
 	
 	
 	/**
+	  * Opens selected album in new window displaying all its photos(handler)
 	  * 
-	  * Opens selected album in new window displaying all its photos
+	  * @param event 
 	  */
 	public void handleViewAlbum(ActionEvent event) throws IOException {
 		
@@ -446,8 +440,8 @@ public class UserHomepageControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Allows User to Rename a selected Album
+	  * @param event 
 	  */
 	public void handleRenameAlbum(ActionEvent event) throws IOException {
 		
@@ -565,8 +559,8 @@ public class UserHomepageControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Opens new Search Window and allows user to search for photos based on Search Criteria
+	  * @param event 
 	  */
 	public void handleSearch(ActionEvent event) throws IOException {
 		
@@ -586,8 +580,8 @@ public class UserHomepageControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Logs out the current user's session
+	  * @param event 
 	  */
 	public void handleLogout(ActionEvent event) {
 		try {

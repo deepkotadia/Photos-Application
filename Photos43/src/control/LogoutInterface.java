@@ -1,6 +1,3 @@
-/**
- * 
- */
 package control;
 
 import java.io.IOException;
@@ -13,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
+ * interface called logout that all controllers implement
  * @author Deep Kotadia
  * @author Chinmoyi Bhushan
  *

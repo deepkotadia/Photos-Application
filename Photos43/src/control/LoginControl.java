@@ -1,6 +1,3 @@
-/**
- * 
- */
 package control;
 
 import java.io.IOException;
@@ -33,6 +30,7 @@ import application.Photos;
 
 
 /**
+ * controller class for login 
  * @author Deep Kotadia
  * @author Chinmoyi Bhushan
  *
@@ -50,7 +48,12 @@ public class LoginControl {
 	public final String adminUserName = "admin";
 	
 	
-	//TODO link to login button then pass username
+	/**
+	 * handler for login button 
+	 * @param event
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public void handleLoginBtn(ActionEvent event) throws ClassNotFoundException, IOException {
 		
 		String usernamestr = username.getText();

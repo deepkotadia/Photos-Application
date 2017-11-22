@@ -1,6 +1,3 @@
-/**
- * 
- */
 package control;
 
 import java.io.IOException;
@@ -46,6 +43,7 @@ public class AdminHomepageControl implements LogoutInterface {
 	private ObservableList<String> obsList;
 	
 	/**
+	 * @param App_Stage 
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 * 
@@ -69,8 +67,8 @@ public class AdminHomepageControl implements LogoutInterface {
 	}
 	
 	/**
-	  * 
 	  * Prompts Admin to add new User, adds it to the main arraylist
+	  * @param event 
 	  */
 	public void handleAddUser(ActionEvent event) throws IOException {
 		   
@@ -164,12 +162,6 @@ public class AdminHomepageControl implements LogoutInterface {
 		   }
 	}
 	
-	
-	  /**
-	    * 
-	    * Check the fields, return null if no errors found
-	    * @return the error message in string format, null if no errors
-	    */
 	   private String checkFields(String username, String name) {
 		   if (username.trim().isEmpty())
 			   return "Username is a required field.";
@@ -184,8 +176,8 @@ public class AdminHomepageControl implements LogoutInterface {
 	   
 	
 	/**
-	  * 
 	  * Delete selected user from list
+	  * @param event 
 	  * @throws IOException 
 	  */
 	public void handleDeleteUser(ActionEvent event) throws IOException {
@@ -233,8 +225,8 @@ public class AdminHomepageControl implements LogoutInterface {
 	}
 	
 	/**
-	  * 
 	  * Logs out the current user's session
+	  * @param event 
 	  */
 	public void handleLogout(ActionEvent event) {
 		try {

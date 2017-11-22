@@ -1,6 +1,3 @@
-/**
- * 
- */
 package control;
 
 import java.io.File;
@@ -49,7 +46,7 @@ import model.Tag;
 import model.User;
 
 
-/**
+/**controller class for an album view page 
  * @author Deep Kotadia
  * @author Chinmoyi Bhushan
  *
@@ -138,6 +135,9 @@ public class SingleAlbumControl implements LogoutInterface {
 		
 	}
 	
+	/**
+	 * to refresh an album info after changes 
+	 */
 	public void refreshAlbumInfo() {
 		if(!(photosInAlbum.isEmpty())) {
 			daterange.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getMinDate().toString() + " - " + Photos.manager.getCurrentUser().getcurrentAlbum().getMaxDate().toString());
@@ -231,9 +231,9 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Prompts User to add new Photo from computer, adds the filepath to the main arraylist in PhotoAlbumManager
 	  * Displays the photo from the path inside the album in SingleAlbum page
+	  * @param event 
 	  * 
 	  */
 	public void handleAddPhoto(ActionEvent event) throws IOException {
@@ -296,8 +296,8 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Let's user open the photo in an enlarged view in a new window
+	  * @param event 
 	  */
 	public void handleViewPhoto(ActionEvent event) throws IOException {
 		
@@ -345,8 +345,8 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Allows user to delete a selected photo from currently open Album
+	  * @param event 
 	  */
 	public void handleDeletePhoto(ActionEvent event) throws IOException {
 		
@@ -418,8 +418,8 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Allows user to caption a selected photo from currently open Album
+	  * @param event 
 	  */
 	public void handleCaptionPhoto(ActionEvent event) throws IOException {
 		
@@ -475,8 +475,8 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Let's user move the selected photo from one album to another
+	  * @param event 
 	  */
 	public void handleMovePhoto(ActionEvent event) throws IOException {
 		
@@ -628,8 +628,8 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Let's user copy the selected photo into another album
+	  * @param event 
 	  */
 	public void handleCopyPhoto(ActionEvent event) throws IOException {
 		
@@ -761,9 +761,9 @@ public class SingleAlbumControl implements LogoutInterface {
 		   
 	
 		/**
-		 * 
 		 * Check the fields, return null if no errors found
-		 * @return the error message in string format, null if no errors
+		 * @param albumname
+		 * @return String  the error message in string format, null if no errors
 		 */
 		 private String checkFields(String albumname) {
 			   if (albumname.trim().isEmpty())
@@ -780,8 +780,8 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	
 	/**
-	  * 
 	  * Let's user go back to list of albums page (user homepage)
+	  * @param event 
 	  */
 	public void handleBack(ActionEvent event) throws IOException {
 		
@@ -803,8 +803,8 @@ public class SingleAlbumControl implements LogoutInterface {
 	
 	
  	/**
-	  * 
 	  * Logs out the current user's session
+	  * @param event 
 	  */
 	public void handleLogout(ActionEvent event) {
 		try {

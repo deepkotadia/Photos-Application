@@ -15,6 +15,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Photos contains main, application starts from here
+ * @author Deep Kotadia
+ * @author Chinmoyi Bhushan
+ *
+ */
 
 public class Photos extends Application {
 	
@@ -59,7 +65,6 @@ public class Photos extends Application {
 		});
 	
 	}
-	
 	
 	public static void main(String[] args) throws ClassNotFoundException {
 
