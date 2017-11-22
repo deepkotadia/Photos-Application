@@ -85,13 +85,6 @@ public class SlideshowControl implements LogoutInterface {
 		
 		populateTagsTextArea();
 		
-		/*if(SingleAlbumControl.photo_currindex == 0) {
-			prev.setVisible(false);
-		}
-		else if(SingleAlbumControl.photo_currindex == Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size()-1) {
-			next.setVisible(false);
-		}*/
-		
 	}
 	
 	
@@ -168,15 +161,12 @@ public class SlideshowControl implements LogoutInterface {
 		   //wait for response from add button
 		   Optional<Tag> result = dialog.showAndWait();
 		   
-		   // if user presses Add, add the user to the overall list
+		   // if user presses Add, add the tag to the overall list of tags for this photo
 		   if (result.isPresent()) {
 			   Tag newtag = (Tag) result.get(); //store result
 			   
 			   Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().addTag(newtag.key, newtag.value);
 			   populateTagsTextArea();
-			   //listView.refresh();
-			   //obsList=FXCollections.observableArrayList(nameandusername);
-			   //listView.setItems(obsList);
 			   PhotoAlbumManager.serialize(Photos.manager);	   
 		   }
 		
@@ -261,15 +251,12 @@ public class SlideshowControl implements LogoutInterface {
 		   //wait for response from add button
 		   Optional<Tag> result = dialog.showAndWait();
 		   
-		   // if user presses Add, add the user to the overall list
+		   // if user presses Delete, remove the tag from the overall list of tags for this photo
 		   if (result.isPresent()) {
 			   Tag newtag = (Tag) result.get(); //store result
 			   
 			   Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().removeTag(newtag.key, newtag.value);
 			   populateTagsTextArea();
-			   //listView.refresh();
-			   //obsList=FXCollections.observableArrayList(nameandusername);
-			   //listView.setItems(obsList);
 			   PhotoAlbumManager.serialize(Photos.manager);   
 		   }
 		
@@ -310,25 +297,17 @@ public class SlideshowControl implements LogoutInterface {
 		}
 		
 		//photosInAlbum now consist of all the photos in current album
-		//Photo currphoto = Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto();
 		
 		if(currAlbum != Photos.manager.getCurrentUser().getcurrentAlbum()) { //different album, change of album
 			currindex = SingleAlbumControl.photo_currindex;
 			currAlbum = Photos.manager.getCurrentUser().getcurrentAlbum();
 		}
-		//else { //still the same album
-			//go to previous photo
+		
 			currindex--;
-		//}
 		
 		if(currindex == -1) { //was at the very first pic, cannot go prev anymore after this, set currindex to last pic in album
 			currindex = albumsize-1;
-			//return;
 		}
-		//else if(currindex < albumsize-1) { //not at the last pic, can go next
-		//	next.setVisible(true);
-			//return;
-		//}
 		
 		//set the previous pic as the current photo
 		Photo newPhoto = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex);
@@ -359,26 +338,18 @@ public class SlideshowControl implements LogoutInterface {
 		}
 		
 		//photosInAlbum now consist of all the photos in current album
-		//Photo currphoto = Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto();
 		
 		if(currAlbum != Photos.manager.getCurrentUser().getcurrentAlbum()) { //different album, change of album
 			currindex = SingleAlbumControl.photo_currindex;
 			currAlbum = Photos.manager.getCurrentUser().getcurrentAlbum();
 		}
-		//else { //still the same album
 		
 		//go to next photo
 		currindex++;
-		//}
 		
 		if(currindex == albumsize) { //was at the very last pic, cannot go next anymore after this, so set currindex to first image
 			currindex = 0;
-			//return;
 		}
-		//else if(currindex > 0) { //not at the first pic, can go prev
-		//	prev.setVisible(true);
-			//return;
-		//}
 		
 		//set the next pic as the current photo
 		Photo newPhoto = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex);
