@@ -70,7 +70,11 @@ public class SearchControl implements LogoutInterface {
 	private List<String> displayTags = new ArrayList<String>();
 	private ObservableList<Photo> obsList;
 	private ObservableList<String> obsList_Tag;
-
+	
+	/**
+	 * start function
+	 * @param app_stage
+	 */
 	public void start(Stage app_stage) {
 		
 		app_stage.setTitle(Photos.manager.getCurrentUser().getName() + " 's Photos Search Page");
@@ -78,7 +82,7 @@ public class SearchControl implements LogoutInterface {
 	}
 	
 	/**
-	 * returns a list of photos with the date range to search for
+	 * handler for searching by date range; displays list of photos within the date range searched by the user
 	 * @param event
 	 */
 	public void handleSearchByDate(ActionEvent event) {
@@ -218,7 +222,7 @@ public class SearchControl implements LogoutInterface {
 	}
 	
 	/**
-	 * This function is the handler for adding a tag to a list of tags to be searched for 
+	 * This function is the handler for adding a tag to a list of tags to be searched for by the user
 	 * @param event
 	 */
 	
@@ -257,7 +261,7 @@ public class SearchControl implements LogoutInterface {
 	}
 	
 	/**
-	 * handler for the button to create an album from the search results
+	 * handler for the button to create an album based on the search results from a user
 	 * @param event
 	 */
 	public void handleCreateAlbum(ActionEvent event) {
