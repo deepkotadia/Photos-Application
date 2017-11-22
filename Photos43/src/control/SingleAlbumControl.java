@@ -5,6 +5,7 @@ package control;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -124,7 +125,12 @@ public class SingleAlbumControl implements LogoutInterface {
 			numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
 		}
 		else { //no photos in album, so no thumbnail pic available
-			Image no_thumb = new Image(new File("/Users/deepkotadia/Desktop/Fall 2017/Software Methodology (CS 213)/photoscs213/Photos43/stockphotos/no_thumb.jpg").toURI().toString());
+			Image no_thumb = null;
+			try {
+				no_thumb = new Image(getClass().getResource("/no_thumb.jpg").toURI().toString());
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
 			albumimg.setImage(no_thumb);
 			numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
 			daterange.setText("-");

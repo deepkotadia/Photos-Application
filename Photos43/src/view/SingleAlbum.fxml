@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.SingleAlbumControl">
    <children>
-      <Text fx:id="albumname" fill="#1f6f22" layoutX="182.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Name" wrappingWidth="253.13671875">
+      <Text fx:id="albumname" fill="#1f6f22" layoutX="193.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No Album Name" wrappingWidth="232.13671875">
          <font>
             <Font name="Nirmala UI" size="15.0" />
          </font>
@@ -35,13 +35,13 @@
       </Button>
       <ImageView fx:id="albumimg" fitHeight="90.0" fitWidth="90.0" layoutX="102.0" layoutY="48.0" preserveRatio="true">
          <image>
-            <Image url="@../../stockphotos/thumbnail.png" />
+            <Image url="@../../bin/no_thumb.jpg" />
          </image>
       </ImageView>
       <Text fx:id="daterange" layoutX="206.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="old month yr - new month yr" />
       <Text fx:id="numphotos" layoutX="206.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Photos" />
-      <Button fx:id="addPhoto" layoutX="491.0" layoutY="83.0" mnemonicParsing="false" onAction="#handleAddPhoto" text="+" />
-      <MenuButton fx:id="photoOptions" layoutX="543.0" layoutY="83.0" mnemonicParsing="false" text=". . .">
+      <Button fx:id="addPhoto" layoutX="491.0" layoutY="98.0" mnemonicParsing="false" onAction="#handleAddPhoto" text="+" />
+      <MenuButton fx:id="photoOptions" layoutX="539.0" layoutY="101.0" mnemonicParsing="false" text=". . .">
          <font>
             <Font name="System Bold" size="11.0" />
          </font>
@@ -54,5 +54,6 @@
          </items>
       </MenuButton>
       <ListView fx:id="photosList" layoutX="102.0" layoutY="151.0" prefHeight="242.0" prefWidth="372.0" />
+      <Text layoutX="147.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album:" />
    </children>
 </AnchorPane>

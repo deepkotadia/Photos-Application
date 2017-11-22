@@ -5,6 +5,7 @@ package control;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -171,7 +172,12 @@ public class UserHomepageControl implements LogoutInterface {
 			
 			else if(album.getPhotos().isEmpty()) //album is empty, so no cover photo
 			{
-				Image no_thumb = new Image(new File("/Users/deepkotadia/Desktop/Fall 2017/Software Methodology (CS 213)/photoscs213/Photos43/stockphotos/no_thumb.jpg").toURI().toString());
+				Image no_thumb = null;
+				try {
+					no_thumb = new Image(getClass().getResource("/no_thumb.jpg").toURI().toString());
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
+				}
 				imageView.setImage(no_thumb);
 				albumName.setText("");
 				if(album != null) {

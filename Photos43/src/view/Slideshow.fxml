@@ -19,7 +19,7 @@
       </ImageView>
       <Button fx:id="prev" layoutX="46.0" layoutY="126.0" mnemonicParsing="false" onAction="#handlePrev" text="&lt;" />
       <Button fx:id="next" layoutX="519.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleNext" text="&gt;" />
-      <Text fx:id="albumname" fill="#1f6f22" layoutX="98.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Name" wrappingWidth="253.13671875">
+      <Text fx:id="caption" fill="#1f6f22" layoutX="131.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No Caption" wrappingWidth="151.13671875">
          <font>
             <Font name="Nirmala UI" size="15.0" />
          </font>
@@ -40,7 +40,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </Button>
-      <TextArea fx:id="tags" layoutX="123.0" layoutY="283.0" prefHeight="103.0" prefWidth="341.0" />
+      <TextArea fx:id="tags" editable="false" layoutX="123.0" layoutY="283.0" prefHeight="75.0" prefWidth="341.0" />
       <MenuButton fx:id="tagOptions" layoutX="508.0" layoutY="283.0" mnemonicParsing="false" text="Tag">
          <font>
             <Font name="System Bold" size="11.0" />
@@ -50,6 +50,10 @@
             <MenuItem fx:id="DeleteTag" mnemonicParsing="false" onAction="#handleDeleteTag" text="Delete Tag" />
          </items>
       </MenuButton>
-      <Text fx:id="numphotos" layoutX="347.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Photos" />
+      <Text fx:id="numphotos" layoutX="237.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Photos" />
+      <Text layoutX="74.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caption:" />
+      <Text fx:id="date" layoutX="326.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="old month yr - new month yr" />
+      <Text layoutX="289.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
+      <Text layoutX="40.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List of Tags:" />
    </children>
 </AnchorPane>

@@ -57,7 +57,7 @@ public class SlideshowControl implements LogoutInterface {
 	TextArea tags;
 	
 	@FXML
-	Text albumname, numphotos;
+	Text caption, date, numphotos;
 	
 	@FXML
 	MenuButton tagOptions;
@@ -76,7 +76,8 @@ public class SlideshowControl implements LogoutInterface {
 	public void start(Stage app_stage) {
 		
 		app_stage.setTitle(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName() + " Album Slideshow");
-		albumname.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName());
+		caption.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().getCaption());
+		date.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().getDateAdded().toString());
 		numphotos.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size() + " photos");
 		
 		Image currimg = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().getPhotoPath()).toURI().toString());
@@ -338,6 +339,9 @@ public class SlideshowControl implements LogoutInterface {
 		Image newimg = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex).getPhotoPath()).toURI().toString());
 		imgslide.setImage(newimg);
 		
+		caption.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().getCaption());
+		date.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().getDateAdded().toString());
+		
 	}
 	
 	
@@ -384,6 +388,9 @@ public class SlideshowControl implements LogoutInterface {
 		
 		Image newimg = new Image(new File(Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex).getPhotoPath()).toURI().toString());
 		imgslide.setImage(newimg);
+		
+		caption.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().getCaption());
+		date.setText(Photos.manager.getCurrentUser().getcurrentAlbum().getcurrentPhoto().getDateAdded().toString());
 		
 	}
 
