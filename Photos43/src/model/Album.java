@@ -52,6 +52,24 @@ public class Album implements Serializable {
 		}
 	}
 	
+	public void copyPhoto(String photoPath, String caption, List<Tag> tags) {
+		Photo newPhoto = new Photo(photoPath, caption, tags);
+		photos.add(newPhoto);
+		
+		if(photos.size() == 1) {
+			maxDate = newPhoto.getDateAdded();
+			minDate = newPhoto.getDateAdded();
+		}
+		
+		else if(newPhoto.getDateAdded().compareTo(maxDate) > 0) {
+			this.maxDate = newPhoto.getDateAdded();
+		}
+		
+		else if(newPhoto.getDateAdded().compareTo(minDate) < 0) {
+			this.minDate = newPhoto.getDateAdded();
+		}
+	}
+	
 	public void addPhotos(List<Photo> photosForNewAlbum) {
 		photos.addAll(photosForNewAlbum);
 		this.refreshMinDate();

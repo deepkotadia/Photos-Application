@@ -29,6 +29,15 @@ public class Photo implements Serializable {
 		this.tags = new ArrayList<Tag>();
 	}
 	
+	public Photo(String photoPath, String caption, List<Tag> tags) {
+		this.photoPath = photoPath;
+		this.caption = caption;
+		File photoFile = new File(photoPath);
+		this.dateAdded = new Date(photoFile.lastModified());
+		this.tags = new ArrayList<Tag>();
+		this.tags.addAll(tags);
+	}
+	
 	public void addTag(String key, String value) {
 		tags.add(new Tag(key, value));
 	}

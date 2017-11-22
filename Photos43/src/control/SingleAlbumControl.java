@@ -44,6 +44,7 @@ import javafx.util.Callback;
 import model.Album;
 import model.Photo;
 import model.PhotoAlbumManager;
+import model.Tag;
 import model.User;
 
 
@@ -546,6 +547,23 @@ public class SingleAlbumControl implements LogoutInterface {
 		   if (result.isPresent()) {
 			   String newAlbumName = result.get(); //store result
 			   
+			   if(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName().equals(newAlbumName)) {
+					
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Error Dialog");
+					alert.setHeaderText("Destination Album cannot be same as Source Album.");
+				    alert.setContentText("Please add a different album than current one.");
+
+			    	    Optional<ButtonType> buttonClicked=alert.showAndWait();
+					   if (buttonClicked.get()==ButtonType.OK) {
+						   alert.close();
+					   }
+					   else {
+						   alert.close();
+					   }
+					return; //function ended in error state
+				}
+			   
 			   //get index of album where selected photo needs to be moved
 			   List<Album> albums = Photos.manager.getCurrentUser().getAlbums();
 			   int albumindex = 0;
@@ -556,11 +574,13 @@ public class SingleAlbumControl implements LogoutInterface {
 				   }
 			   }
 			   
-			   //get path of selected photo (to be moved)
+			   //get details of selected photo (to be moved)
 			   String photopath = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex).getPhotoPath();
+			   String caption = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex).getCaption();
+			   List<Tag> tags = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex).getTags();
 			   
 			   //clone the photo in new album
-			   Photos.manager.getCurrentUser().getAlbums().get(albumindex).addPhoto(photopath);
+			   Photos.manager.getCurrentUser().getAlbums().get(albumindex).copyPhoto(photopath, caption, tags);
 			   
 			   //remove photo from current album
 			   Photos.manager.getCurrentUser().getcurrentAlbum().removePhoto(photoindex);
@@ -680,6 +700,23 @@ public class SingleAlbumControl implements LogoutInterface {
 		   if (result.isPresent()) {
 			   String newAlbumName = result.get(); //store result
 			   
+			   if(Photos.manager.getCurrentUser().getcurrentAlbum().getAlbumName().equals(newAlbumName)) {
+					
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Error Dialog");
+					alert.setHeaderText("Destination Album cannot be same as Source Album.");
+				    alert.setContentText("Please add a different album than current one.");
+
+			    	    Optional<ButtonType> buttonClicked=alert.showAndWait();
+					   if (buttonClicked.get()==ButtonType.OK) {
+						   alert.close();
+					   }
+					   else {
+						   alert.close();
+					   }
+					return; //function ended in error state
+				}
+			   
 			   //get index of album where selected photo needs to be copied
 			   List<Album> albums = Photos.manager.getCurrentUser().getAlbums();
 			   int albumindex = 0;
@@ -690,11 +727,13 @@ public class SingleAlbumControl implements LogoutInterface {
 				   }
 			   }
 			   
-			   //get path of selected photo (to be copied)
+			   //get details of selected photo (to be copied)
 			   String photopath = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex).getPhotoPath();
+			   String caption = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex).getCaption();
+			   List<Tag> tags = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(photoindex).getTags();
 			   
 			   //clone the photo in new album
-			   Photos.manager.getCurrentUser().getAlbums().get(albumindex).addPhoto(photopath);
+			   Photos.manager.getCurrentUser().getAlbums().get(albumindex).copyPhoto(photopath, caption, tags);
 			   
 			   populatePhotosList();
 			   photosList.refresh();
