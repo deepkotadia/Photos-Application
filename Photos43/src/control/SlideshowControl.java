@@ -84,12 +84,12 @@ public class SlideshowControl implements LogoutInterface {
 		
 		populateTagsTextArea();
 		
-		if(SingleAlbumControl.photo_currindex == 0) {
+		/*if(SingleAlbumControl.photo_currindex == 0) {
 			prev.setVisible(false);
 		}
 		else if(SingleAlbumControl.photo_currindex == Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().size()-1) {
 			next.setVisible(false);
-		}
+		}*/
 		
 	}
 	
@@ -320,14 +320,14 @@ public class SlideshowControl implements LogoutInterface {
 			currindex--;
 		//}
 		
-		if(currindex == 0) { //at the very first pic, cannot go prev anymore after this
-			prev.setVisible(false);
+		if(currindex == -1) { //was at the very first pic, cannot go prev anymore after this, set currindex to last pic in album
+			currindex = albumsize-1;
 			//return;
 		}
-		else if(currindex < albumsize-1) { //not at the last pic, can go next
-			next.setVisible(true);
+		//else if(currindex < albumsize-1) { //not at the last pic, can go next
+		//	next.setVisible(true);
 			//return;
-		}
+		//}
 		
 		//set the previous pic as the current photo
 		Photo newPhoto = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex);
@@ -362,18 +362,19 @@ public class SlideshowControl implements LogoutInterface {
 			currAlbum = Photos.manager.getCurrentUser().getcurrentAlbum();
 		}
 		//else { //still the same album
-			//go to next photo
-			currindex++;
+		
+		//go to next photo
+		currindex++;
 		//}
 		
-		if(currindex == albumsize-1) { //at the very last pic, cannot go next anymore after this
-			next.setVisible(false);
+		if(currindex == albumsize) { //was at the very last pic, cannot go next anymore after this, so set currindex to first image
+			currindex = 0;
 			//return;
 		}
-		else if(currindex > 0) { //not at the first pic, can go prev
-			prev.setVisible(true);
+		//else if(currindex > 0) { //not at the first pic, can go prev
+		//	prev.setVisible(true);
 			//return;
-		}
+		//}
 		
 		//set the next pic as the current photo
 		Photo newPhoto = Photos.manager.getCurrentUser().getcurrentAlbum().getPhotos().get(currindex);
